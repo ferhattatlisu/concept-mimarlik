@@ -7,7 +7,8 @@
    - Proje adları, yerler, yıllar ve teknik bilgiler: firmanın kendi
      Instagram paylaşımları (@conceptmimarlik_, 494 gönderi).
    - Fotoğraf ve videolar: aynı hesap + firmanın WhatsApp'tan gönderdiği
-     6 fotoğraf ve 5 video (ConcepT 12).
+     6 fotoğraf ve 5 video ("Yeni Konut Yerleşkesi"; adı ve yeri firmadan
+     teyit edilecek, bkz. ARASTIRMA.md).
    - Adres ve telefon: Instagram profili, Yandex Haritalar, Facebook sayfası.
    Paylaşımlarda yazmayan hiçbir ölçü, tarih ya da ad eklenmedi. Yayına
    almadan önce firma ile birlikte gözden geçirilmelidir (bkz. ARASTIRMA.md).
@@ -70,7 +71,7 @@
     heroSlides: [
       { image: g("kac-01"),          caption: "Kaç A.Ş konutları — tasarım, Kocaeli" },
       { image: g("khalid-villa-01"), caption: "K.Halid Villa — Kırkpınar, Sapanca" },
-      { image: g("concept-12-01"),   caption: "ConcepT 12 — Arifiye, Sakarya" },
+      { image: g("yerleske-01"),     caption: "Yeni konut yerleşkesi — şantiyeden, Ekim 2026" },
       { image: g("dag-evi-01"),      caption: "Dağ Evi — tasarım, Sapanca" },
       { image: g("na-villa-01"),     caption: "N.A Villa — Esentepe, Serdivan" }
     ],
@@ -117,7 +118,7 @@
       {
         slug: "concept-12",
         title: "ConcepT 12",
-        tagline: "Arifiye'de, ortak bahçe çevresinde iki bloktan oluşan 12 dairelik konut.",
+        tagline: "Arifiye Fatih Mahallesi'nde tasarımını ve inşaatını üstlendiğimiz, 3+1 dairelerden oluşan 12 dairelik konut.",
         location: "Fatih Mah., Arifiye / Sakarya",
         year: 2025,
         area: "12 daire · 3+1 · 125 m²",
@@ -126,22 +127,49 @@
         client: "Concept Mimarlık İnşaat",
         featured: true,
         showcase: true,
-        cover: g("concept-12-01"),
+        cover: g("concept-12-10"),
         text: [
           "ConcepT 12, Arifiye Fatih Mahallesi'nde tasarımını ve inşaatını kendimiz üstlendiğimiz 12 dairelik konut projemiz. Dairelerin tamamı 3+1 ve 125 m².",
           "Yapı radye temel üzerine C30 betonla inşa edildi. Dairelerde yerden ısıtma, 60x120 seramik zemin kaplaması, salon ve holde gizli ışıklı LED aydınlatma ve ebeveyn banyosu bulunuyor.",
-          "Site içinde 450 m² yeşil alan var; bloklar arasındaki baskı beton yürüyüş yolu ve bahçe çocukların rahatça oynayabileceği şekilde düzenlendi. Cami, okul ve marketler 5 dakikalık yürüme mesafesinde; Arifiye tren garı 7 dakika, büyükşehir terminali 2 km uzaklıkta."
+          "Site içinde 450 m² yeşil alan ve baskı beton bir yürüyüş yolu var; açık alanlar çocukların rahatça oynayabileceği şekilde düzenlendi. Cami, okul ve marketler 5 dakikalık yürüme mesafesinde; Arifiye tren garı 7 dakika, büyükşehir terminali 2 km uzaklıkta.",
+          "Galerideki cephe görselleri projenin üç boyutlu tasarım çalışmasıdır; demir bağlama, kolon, parapet betonu ve baskı beton kareleri şantiyeden alındı."
         ],
         gallery: [
-          genis("concept-12-10"),
-          dikey("concept-12-03"),
-          dikey("concept-12-04"),
-          { video: "images/concept-12-tur.mp4", poster: g("concept-12-tur") },
-          dikey("concept-12-06"),
           dikey("concept-12-02"),
           dikey("concept-12-07"),
+          dikey("concept-12-asama-03"),
+          dikey("concept-12-asama-01"),
+          dikey("concept-12-asama-02"),
+          dikey("concept-12-teslim-01"),
           dikey("concept-12-08"),
           dikey("concept-12-09")
+        ]
+      },
+      {
+        slug: "yeni-konut-yerleskesi",
+        title: "Yeni Konut Yerleşkesi",
+        tagline: "Dokulu gri sıva, ahşap görünümlü kolonlar ve ortak bahçe: üç katlı konut blokları.",
+        location: "",                 // yer firmadan teyit edilecek (bkz. ARASTIRMA.md)
+        year: 2026,
+        area: "3 katlı bloklar",
+        category: "Konut",
+        status: "Yapım aşamasında",
+        client: "Concept Mimarlık İnşaat",
+        featured: true,
+        showcase: true,
+        cover: g("yerleske-01"),
+        text: [
+          "Ekim 2026'da şantiyeden paylaştığımız bu konut yerleşkesi, ortak bir bahçe çevresinde sıralanan üç katlı bloklardan oluşuyor. Cepheler dokulu gri sıva ve beyaz yüzeylerle kaplandı; bina köşelerinde ahşap görünümlü kolon kaplamaları kullanıldı.",
+          "Balkonlar beyaz sıvalı ve siyah korkuluklu; zemin kat pencereleri doğrudan bahçeye bakıyor. Bloklar arasında baskı beton bir yürüyüş yolu uzanıyor; iki yanı çim ve genç ağaçlarla düzenlendi.",
+          "Kabartma desenli bahçe duvarı yapıyı sokaktan ayırıyor. Cepheler ve avlu bahçesi tamam; yol ve çevre düzeni çalışmaları sürüyor."
+        ],
+        gallery: [
+          dikey("yerleske-02"),
+          dikey("yerleske-03"),
+          { video: "images/yerleske-tur.mp4", poster: g("yerleske-tur") },
+          dikey("yerleske-04"),
+          dikey("yerleske-05"),
+          dikey("yerleske-01")
         ]
       },
       {
@@ -578,10 +606,10 @@
     /* ---------- GÜNCEL ---------- */
     // link boş ("") bırakılırsa kart tıklanamaz olur.
     news: [
-      { tag: "Satışta", date: "Ekim 2026",  title: "Arifiye Neviye'de 2+1 daireler satışta",       image: g("neviye-01"),     link: "proje.html?id=concept-12-neviye" },
-      { tag: "Villa",   date: "Şubat 2026", title: "S.A Villa'da cephe ve havuz tamamlandı",      image: g("sa-villa-02"),   link: "proje.html?id=sa-villa" },
-      { tag: "Lansman", date: "Eylül 2025", title: "ConcepT 15, Arifiye Arifbey'de satışa çıktı", image: g("concept-15-03"), link: "proje.html?id=concept-15" },
-      { tag: "Teslim",  date: "Eylül 2025", title: "ConcepT 12'de 3+1 daireler hemen teslim",     image: g("concept-12-03"), link: "proje.html?id=concept-12" }
+      { tag: "Şantiyeden", date: "Ekim 2026",  title: "Yeni konut yerleşkesinde cepheler ve avlu bahçesi tamam",  image: g("yerleske-03"),        link: "proje.html?id=yeni-konut-yerleskesi" },
+      { tag: "Satışta",    date: "Ekim 2026",  title: "Arifiye Neviye'de 2+1 daireler satışta",                   image: g("neviye-01"),          link: "proje.html?id=concept-12-neviye" },
+      { tag: "Villa",      date: "Şubat 2026", title: "S.A Villa'da cephe ve havuz tamamlandı",                   image: g("sa-villa-02"),        link: "proje.html?id=sa-villa" },
+      { tag: "Teslim",     date: "Eylül 2025", title: "ConcepT 12'de 3+1 daireler hemen teslim",                  image: g("concept-12-teslim-01"), link: "proje.html?id=concept-12" }
     ],
 
     /* ---------- HAKKIMIZDA SAYFASI ---------- */

@@ -79,6 +79,8 @@
       (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async"></span>';
   }
   function projectUrl(p) { return "proje.html?id=" + encodeURIComponent(p.slug); }
+  // "Yer · Yıl" satırı; yeri henüz bilinmeyen projede yalnızca yıl görünür.
+  function placeYear(p) { return esc([p.location, p.year].filter(Boolean).join(" · ")); }
   function initials(name) {
     var p = String(name || "").trim().split(/\s+/);
     return ((p[0] || "").charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : "")).toLocaleUpperCase("tr");
@@ -355,7 +357,7 @@
               '<span class="media" data-ph="Görsel"><img src="' + esc(sized(p.cover, 1400)) + '" alt="' + esc(p.title) + '" loading="lazy" decoding="async">' +
                 '<span class="card-cta">' + esc(L.view) + " →</span></span>" +
               '<span class="card-meta"><span class="card-title">' + esc(p.title) + "</span>" +
-              '<span class="card-sub">' + esc(p.location) + " · " + esc(p.year) + "</span></span>" +
+              '<span class="card-sub">' + placeYear(p) + "</span></span>" +
             "</a>";
           }).join("") +
         "</div>" +
@@ -438,7 +440,7 @@
         return '<a class="pitem" href="' + projectUrl(p) + '" style="--i:' + i + '"' + (view === "izgara" ? ' data-cursor="' + esc(L.view) + '"' : "") + ">" +
           '<span class="pitem-no">' + pad2(i + 1) + "</span>" +
           '<span class="pitem-title">' + esc(p.title) + "</span>" +
-          '<span class="pitem-sub">' + esc(p.location) + " · " + esc(p.year) + "</span>" +
+          '<span class="pitem-sub">' + placeYear(p) + "</span>" +
           '<span class="pitem-loc">' + esc(p.location) + "</span>" +
           '<span class="pitem-cat">' + esc(p.category) + "</span>" +
           '<span class="pitem-year">' + esc(p.year) + "</span>" +
