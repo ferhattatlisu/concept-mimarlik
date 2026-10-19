@@ -22,7 +22,7 @@
   var GRADS = window.__GRADS || ["linear-gradient(90deg,#c5e5e5,#ebf0f0)"];
   var PAGE = body.getAttribute("data-page") || "home";
   // data.js'te bir bölüm silinmiş ya da boş bırakılmışsa site yine de çalışsın
-  ["nav", "headlines", "heroSlides", "split", "projects", "services", "news", "team", "offices"].forEach(function (k) {
+  ["nav", "headlines", "heroSlides", "split", "projects", "projectTabs", "services", "news", "team", "offices"].forEach(function (k) {
     if (!Array.isArray(S[k])) S[k] = [];
   });
   S.brand = S.brand || { name: "" };
@@ -175,11 +175,21 @@
   /* ------------------------------------------------------------------
      Ortak bölümler
      ------------------------------------------------------------------ */
+  // Projeler sayfasındaki sekme (?sekme=tamamlanan); yoksa ilk sekme
+  function tabOf(search) {
+    var t = "";
+    try { t = new URLSearchParams(search || "").get("sekme") || ""; } catch (e) {}
+    return t || (S.projectTabs[0] ? S.projectTabs[0].id : "");
+  }
   function isCurrent(href) {
     if (href.indexOf("#") !== -1) return false;
     var here = fileOf(location.pathname);
-    if (here === "proje") here = "projeler";
-    return fileOf(href) === here;
+    var onProject = here === "proje";
+    if (onProject) here = "projeler";
+    if (fileOf(href) !== here) return false;
+    if (here !== "projeler") return true;
+    var q = href.indexOf("?") === -1 ? "" : href.slice(href.indexOf("?"));
+    return tabOf(q) === (onProject ? tabOf("") : tabOf(location.search));
   }
 
   function headerHTML() {
@@ -402,27 +412,32 @@
      PROJELER SAYFASI
      ------------------------------------------------------------------ */
   function renderProjects() {
-    var all = S.projects;
-    var cats = [];
-    all.forEach(function (p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
+    // Sekmeler data.js'teki "projectTabs" listesinden gelir. "durum" alanı boş olan sekme tüm projeleri gösterir.
+    var TABS = S.projectTabs.length ? S.projectTabs : [{ id: "", label: L.showcaseTitle, title: L.showcaseTitle }];
+    function tabById(id) { return TABS.filter(function (t) { return t.id === id; })[0] || TABS[0]; }
+    var tab = tabById(tabOf(location.search));
     var cur = "";
     try { cur = new URLSearchParams(location.search).get("kategori") || ""; } catch (e) {}
-    if (cats.indexOf(cur) === -1) cur = "";
     var view = "liste";
+
+    function inTab(p) { return !tab.durum || p.durum === tab.durum; }
+    function titleOf(t) { return t.title || t.label; }
 
     main.innerHTML = '' +
       '<section class="t-light" data-theme="light">' +
         '<div class="phead">' +
           '<div class="phead-row rv"><p class="label">' + esc(BRAND) + '</p><p class="label mute" data-count></p></div>' +
-          '<h1 class="phead-title mkw"><span class="mk"><span>' + esc(L.showcaseTitle) + "</span></span></h1>" +
+          '<h1 class="phead-title mkw"><span class="mk"><span data-tab-title></span></span></h1>' +
         "</div>" +
-        '<div class="pbar rv">' +
-          '<div class="chips" data-cats>' +
-            [""].concat(cats).map(function (c) {
-              var n = c ? all.filter(function (p) { return p.category === c; }).length : all.length;
-              return '<button class="chip" type="button" data-cat="' + esc(c) + '">' + esc(c || "Tümü") + "<sup>" + n + "</sup></button>";
+        (TABS.length > 1 ?
+          '<div class="ptabs rv" role="tablist" aria-label="Proje grupları">' +
+            TABS.map(function (t) {
+              return '<a class="ptab" role="tab" href="projeler.html?sekme=' + encodeURIComponent(t.id) + '" data-tab="' + esc(t.id) + '">' +
+                esc(t.label) + '<sup data-tab-n="' + esc(t.id) + '"></sup></a>';
             }).join("") +
-          "</div>" +
+          "</div>" : "") +
+        '<div class="pbar rv">' +
+          '<div class="chips" data-cats></div>' +
           '<div class="chips" data-views>' +
             '<button class="chip" type="button" data-view="liste">Liste</button>' +
             '<button class="chip" type="button" data-view="izgara">Izgara</button>' +
@@ -434,6 +449,29 @@
     var list = $(".plist", main), count = $("[data-count]", main);
 
     function draw() {
+      var all = S.projects.filter(inTab);
+      var cats = [];
+      all.forEach(function (p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
+      if (cats.indexOf(cur) === -1) cur = "";
+      $("[data-cats]", main).innerHTML = [""].concat(cats).map(function (c) {
+        var n = c ? all.filter(function (p) { return p.category === c; }).length : all.length;
+        return '<button class="chip" type="button" data-cat="' + esc(c) + '">' + esc(c || "Tümü") + "<sup>" + n + "</sup></button>";
+      }).join("");
+      var t = titleOf(tab), tt = $("[data-tab-title]", main);
+      tt.textContent = t;
+      tt.closest(".phead-title").style.setProperty("--n", Math.max(8, t.length));
+      $$("[data-tab]", main).forEach(function (a) {
+        var on = a.getAttribute("data-tab") === tab.id;
+        a.setAttribute("aria-selected", String(on));
+        if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+      });
+      $$("[data-tab-n]", main).forEach(function (s) {
+        var d = tabById(s.getAttribute("data-tab-n")).durum;
+        s.textContent = S.projects.filter(function (p) { return !d || p.durum === d; }).length;
+      });
+      // Üst menüdeki sekme düğmeleri de seçili sekmeyi göstersin
+      $$(".hdr .pill").forEach(function (a) { var h = a.getAttribute("href"); if (h) a.classList.toggle("is-current", isCurrent(h)); });
+
       var items = all.filter(function (p) { return !cur || p.category === cur; });
       list.setAttribute("data-view", view);
       list.innerHTML = items.length ? items.map(function (p, i) {
@@ -442,24 +480,40 @@
           '<span class="pitem-title">' + esc(p.title) + "</span>" +
           '<span class="pitem-sub">' + placeYear(p) + "</span>" +
           '<span class="pitem-loc">' + esc(p.location) + "</span>" +
-          '<span class="pitem-cat">' + esc(p.category) + "</span>" +
+          '<span class="pitem-cat">' + esc([p.category, tab.durum ? "" : stateOf(p)].filter(Boolean).join(" · ")) + "</span>" +
           '<span class="pitem-year">' + esc(p.year) + "</span>" +
           media(p.cover, p.title, 800, "pitem-img") +
         "</a>";
-      }).join("") : '<p class="pempty">Bu kategoride proje yok.</p>';
+      }).join("") : '<p class="pempty">Bu grupta henüz proje yok.</p>';
       count.textContent = items.length + " proje";
       $$("[data-cat]", main).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === cur)); });
       $$("[data-view]", $("[data-views]", main)).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view)); });
       checkImages(list);
+      doc.title = titleOf(tab) + " — " + BRAND;
     }
 
     main.addEventListener("click", function (e) {
+      var tb = e.target.closest("[data-tab]");
+      if (tb && !(e.metaKey || e.ctrlKey || e.shiftKey || e.button)) {
+        e.preventDefault();
+        tab = tabById(tb.getAttribute("data-tab"));
+        cur = "";
+        try { history.replaceState(null, "", "projeler.html?sekme=" + encodeURIComponent(tab.id)); } catch (err) {}
+        draw();
+        return;
+      }
       var c = e.target.closest("[data-cat]"), v = e.target.closest("[data-views] [data-view]");
       if (c) { cur = c.getAttribute("data-cat"); draw(); }
       else if (v) { view = v.getAttribute("data-view"); draw(); }
     });
     draw();
-    doc.title = L.showcaseTitle + " — " + BRAND;
+  }
+
+  // Liste ve künyede gösterilen durum yazısı
+  function stateOf(p) {
+    if (p.durum === "tamamlanan") return "Tamamlandı";
+    if (p.durum === "devam") return "Devam ediyor";
+    return p.status || "";
   }
 
   /* ------------------------------------------------------------------
@@ -481,12 +535,14 @@
 
     var p = S.projects[idx];
     var next = S.projects[(idx + 1) % S.projects.length];
+    var ptab = S.projectTabs.filter(function (t) { return t.durum && t.durum === p.durum; })[0];
+    var state = esc(p.status || stateOf(p));
     var facts = [
       ["Yer", esc(p.location)],
       ["Yıl", esc(p.year)],
       ["Alan", esc(p.area)],
       ["Tür", '<a href="projeler.html?kategori=' + encodeURIComponent(p.category) + '">' + esc(p.category) + "</a>"],
-      ["Durum", esc(p.status)],
+      ["Durum", ptab && state ? '<a href="projeler.html?sekme=' + encodeURIComponent(ptab.id) + '">' + state + "</a>" : state],
       ["İşveren", esc(p.client)]
     ].filter(function (f) { return f[1]; });
     var text = p.text || [];
@@ -495,7 +551,7 @@
       '<section class="pcover t-dark" data-theme="dark">' +
         media(p.cover, p.title, 2000, "", true) +
         '<div class="pcover-in mkw">' +
-          '<p class="label rv">' + esc(p.category) + " · " + esc(p.year) + "</p>" +
+          '<p class="label rv">' + esc([p.category, p.year].filter(Boolean).join(" · ")) + "</p>" +
           '<h1 class="pcover-title"><span class="mk"><span>' + esc(p.title) + "</span></span></h1>" +
           '<div class="pcover-foot rv" style="--d:.3s"><p>' + esc(p.tagline) + "</p><span>" + esc(p.location) + "</span></div>" +
         "</div>" +

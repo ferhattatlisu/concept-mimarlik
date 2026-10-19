@@ -839,6 +839,41 @@ html.has-cursor [data-cursor], html.has-cursor [data-cursor] * { cursor: none; }
   gap: 14px 24px;
   padding: 0 var(--pad) clamp(20px, 2.4vw, 36px);
 }
+/* Projeler / Tamamlanan / Devam Eden sekmeleri; başlık uzunluğuna göre küçülür (--n = harf sayısı) */
+.phead-title { font-size: clamp(2.6rem, min(16.5vw, calc(126vw / var(--n, 8))), 24rem); }
+.ptabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(18px, 3vw, 48px);
+  margin: 0 var(--pad) clamp(18px, 2.2vw, 30px);
+  border-bottom: 1px solid var(--line);
+}
+.ptab {
+  position: relative;
+  padding: .55em 0 .7em;
+  font-size: clamp(1.05rem, 1.7vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -.01em;
+  color: var(--mute);
+  transition: color .4s var(--ease-out);
+}
+.ptab sup { margin-left: .35em; font-size: .6em; font-variant-numeric: tabular-nums; }
+.ptab::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px;
+  height: 2px; background: currentColor;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .6s var(--ease-out);
+}
+.ptab[aria-selected="true"] { color: #000; }
+.ptab[aria-selected="true"]::after { transform: scaleX(1); }
+@media (hover: hover) { .ptab:hover { color: #000; } }
+@media (max-width: 640px) {
+  .ptabs { flex-wrap: nowrap; overflow-x: auto; gap: 0 18px; scrollbar-width: none; margin-left: 0; margin-right: 0; padding: 0 var(--pad); }
+  .ptabs::-webkit-scrollbar { display: none; }
+  .ptab { flex: none; font-size: 1rem; white-space: nowrap; }
+  .ptab::after { bottom: 0; }
+}
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip {
   padding: .72em 1.25em;
