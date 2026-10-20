@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.xn--conceptmimarlk-igc.com.tr/sitemap.xml
