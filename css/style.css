@@ -1218,3 +1218,7 @@ html.has-cursor [data-cursor], html.has-cursor [data-cursor] * { cursor: none; }
 /* ---- Concept Mimarlık eklemeleri: galeride yatay yarım kare ve video ---- */
 .pgal .media.is-land { aspect-ratio: 4 / 3; }
 .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+/* Logodaki "CA" işareti, yazıyla aynı renkte */
+.logo-mark { display: inline-block; width: .9em; height: .9em; margin-right: .2em; vertical-align: -.1em; }
+/* Görseller sürüklenip kaydedilmesin, telefonda uzun basınca "kaydet" menüsü çıkmasın (js/koruma.js ile birlikte) */
+img, video { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }

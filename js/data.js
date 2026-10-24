@@ -48,7 +48,9 @@
     /* ---------- MARKA ---------- */
     brand: {
       name: "CONCEPT",              // logonun kalın kısmı
-      suffix: "Mimarlık İnşaat",    // logonun ince kısmı (kaydırınca gizlenir)
+      suffix: "Mimarlık",          // logonun ince kısmı (kaydırınca gizlenir)
+      // Logodaki "CA" işareti (firmanın logo PDF'sinden, 22 Eki 2026). Boş bırakılırsa yalnızca yazı görünür.
+      mark: "M73.45 0.57C34.24 1.12 1.94 32.89 0.76 72.08C0 97.51 12.12 120.14 31.07 133.96L38.92 117.26C25.94 106.48 17.92 89.94 18.82 71.55C20.26 41.88 45.37 18.29 75.08 18.59C100.8 18.85 122.36 36.53 128.5 60.4L113.93 60.4C107.86 43.24 90.91 31.21 71.36 32.64C50.82 34.14 34.22 50.81 32.79 71.36C31.1 95.8 50.42 116.16 74.5 116.16C78.56 116.16 82.48 115.55 86.19 114.47L91.8 127.35C86.35 129.12 80.54 130.1 74.5 130.1C66.53 130.1 58.95 128.41 52.09 125.39L44.89 141.91C53.95 145.89 63.97 148.12 74.5 148.12C85.04 148.12 95.05 145.89 104.12 141.91L74.5 73.98L59.85 107.59C55.17 105.52 51.01 102.48 47.61 98.74L70.94 49.07L78.07 49.07L103.87 104.02C108.31 99.63 111.81 94.29 113.93 88.28L128.5 88.28C125.53 99.8 118.97 109.88 110.09 117.26L117.93 133.96C136.32 120.55 148.28 98.85 148.28 74.34C148.28 33.25 114.68 0 73.45 0.57",
       description: "Concept Mimarlık İnşaat; Sakarya Serdivan merkezli, mimari projeyi, inşaatı ve iç mekân uygulamasını tek elden yürüten bir mimarlık ve inşaat firmasıdır."
     },
 
@@ -77,9 +79,9 @@
     // Sırayla dönen başlıklar. Her başlık iki satırdır; satırları kısa tutun (en çok ~14 harf).
     headlines: [
       ["KALEM UCUNDA", "SANAT"],
+      ["SANAT GERÇEKLE", "BULUŞTU"],
       ["ÖNCE ÇİZERİZ",  "SONRA YAPARIZ"],
       ["PROJEDEN",     "ANAHTARA"],
-      ["VİLLA, KONUT", "BUNGALOV"],
       ["SAKARYA'DA",   "YAŞAM KURARIZ"]
     ],
     // Video yolu (ör. "images/tanitim.mp4"). Boşsa aşağıdaki fotoğraf slaytı çalışır.
@@ -103,7 +105,7 @@
     /* ---------- MANİFESTO ---------- */
     // [Köşeli parantez] içindeki kelimelerin altı çizilir.
     manifesto: "Bir yapıyı önce [kalemin ucunda] kurarız. Sonra aynı ekiple [temelden çatıya] inşa eder, [anahtarı] teslim edene kadar şantiyeden ayrılmayız.",
-    manifestoNote: "2017'den bu yana Sakarya, Sapanca ve Kocaeli'de villa, konut, bungalov ve ticari yapılarda mimari projeyi, inşaatı ve iç mekânı tek elden yürütüyoruz.",
+    manifestoNote: "2017'den bu yana Sakarya, Sapanca ve Kocaeli'de villa, konut, otel ve ticari yapılarda mimari projeyi, inşaatı ve iç mekânı tek elden yürütüyoruz.",
 
     /* ---------- BÖLÜNMÜŞ SABİT BÖLÜM (fotoğraflar akar, metin sabit kalır) ---------- */
     split: [
@@ -354,41 +356,6 @@
         ]
       },
       {
-        slug: "bungalovlar",
-        title: "Bungalovlar",
-        tagline: "Üçgen çatılı ahşap bungalovlar: havuzlu bahçeler, galeri katlı sıcak iç mekânlar.",
-        location: "",
-        year: "",
-        area: "",
-        category: "Bungalov",
-        status: "Tamamlandı",
-        durum: "tamamlanan",
-        client: "Özel",
-        featured: true,
-        showcase: false,
-        cover: g("bungalov-01"),
-        text: [
-          "Tasarlayıp uyguladığımız bungalovlardan seçmeler. Üçgen (A) çatılı ve kırma çatılı ahşap yapılar, havuzlu küçük bahçeler ve teraslarla birlikte ele alındı.",
-          "İç mekânlarda ahşap tavanlar ve galeri katları, şömineler ve geniş camlarla doğaya açılan oturma alanları kuruldu. Galerideki karelerin çoğu bitmiş yapılardan fotoğraf, biri üç boyutlu tasarım görselidir."
-        ],
-        gallery: [
-          genis("bungalov-01"),
-          yatay("bungalov-02"),
-          yatay("bungalov-04"),
-          dikey("bungalov-03"),
-          dikey("bungalov-05"),
-          dikey("bungalov-06"),
-          dikey("bungalov-07"),
-          dikey("bungalov-08"),
-          dikey("bungalov-09"),
-          dikey("bungalov-10"),
-          dikey("bungalov-11"),
-          genis("bungalov-12"),
-          yatay("bungalov-13"),
-          yatay("bungalov-14")
-        ]
-      },
-      {
         slug: "lapis-dagtepe",
         title: "Lapis by Dağtepe",
         tagline: "Akyazı'da Dağtepe Tekstil için cam cepheli mağaza ve merkez binası.",
@@ -405,7 +372,8 @@
         text: [
           "Akyazı Ömercikler Mahallesi'nde Dağtepe Tekstil için yürüttüğümüz Lapis projesi. Binanın dış cephesini ve iç mekânını birlikte ele aldık.",
           "Yola bakan yüzde boydan boya cam cephe, ahşap görünümlü kaplama ve koyu çerçevelerle birlikte kullanıldı; yan cepheler doğal taşla kaplandı.",
-          "İç mekânda geniş açıklıklı katlar mermer görünümlü parlak zemin kaplamasıyla tamamlandı."
+          "İç mekânda geniş açıklıklı katlar mermer görünümlü parlak zemin kaplamasıyla tamamlandı.",
+          "Galeriye projenin dış cephe, ofis ve sergi alanları için hazırladığımız üç boyutlu görseller de eklendi."
         ],
         gallery: [
           genis("lapis-y-01"),
@@ -421,7 +389,21 @@
           yatay("lapis-y-12"),
           genis("lapis-y-13"),
           yatay("lapis-y-14"),
-          yatay("lapis-03")
+          yatay("lapis-03"),
+          genis("lapis-r-01"),
+          yatay("lapis-r-02"),
+          yatay("lapis-r-03"),
+          genis("lapis-r-04"),
+          yatay("lapis-r-05"),
+          yatay("lapis-r-06"),
+          genis("lapis-r-07"),
+          yatay("lapis-r-08"),
+          yatay("lapis-r-09"),
+          genis("lapis-r-10"),
+          yatay("lapis-r-11"),
+          yatay("lapis-r-12"),
+          genis("lapis-r-13"),
+          genis("lapis-r-14")
         ]
       },
       {
@@ -653,7 +635,8 @@
         cover: g("ks-villa-01"),
         text: [
           "Klasik çizgide tasarlayıp tamamladığımız bir villa. Beyaz cephe, kemerli pencereler, koyu kepenkler ve süslemeli kat silmeleri yapıya Akdeniz esintili bir görünüm veriyor.",
-          "Bahçede kıvrımlı bir havuz, palmiyeler ve oturma alanları tasarlandı; üç boyutlu görsellerde gündüz ve akşam ışığı birlikte çalışıldı."
+          "Bahçede kıvrımlı bir havuz, palmiyeler ve oturma alanları tasarlandı; üç boyutlu görsellerde gündüz ve akşam ışığı birlikte çalışıldı.",
+          "Galeride yapım sürecinden drone fotoğrafları (istinat duvarları, kaba inşaat ve cephe) ve yeni tasarım görselleri de yer alıyor."
         ],
         gallery: [
           genis("ks-villa-01"),
@@ -663,7 +646,14 @@
           yatay("ks-villa-06"),
           yatay("ks-villa-07"),
           genis("ks-villa-08"),
-          genis("ks-villa-09")
+          genis("ks-villa-09"),
+          genis("ks-villa-b-01"),
+          yatay("ks-villa-b-02"),
+          yatay("ks-villa-b-03"),
+          genis("ks-villa-b-04"),
+          yatay("ks-villa-b-05"),
+          yatay("ks-villa-b-06"),
+          genis("ks-villa-b-07")
         ]
       },
       {
@@ -787,7 +777,8 @@
         text: [
           "Serdivan Esentepe'de tasarladığımız ve inşa ettiğimiz villa. Mimar: Muhammet Sefa Topçu.",
           "Kemerli pencereler, taş ve sıva yüzeyler, koyu renkli çatı ve saçaklar klasik bir villa dili kuruyor; bahçede havuz ve yürüyüş yolları düzenlendi.",
-          "Galeride üç boyutlu tasarım görselleri, ahşap çatı ve cephe aşamaları ile bitmiş yapıdan bir fotoğraf yer alıyor."
+          "Galeride üç boyutlu tasarım görselleri, ahşap çatı ve cephe aşamaları ile bitmiş yapıdan bir fotoğraf yer alıyor.",
+          "Firmanın bu proje adıyla paylaştığı, modern çizgide hazırlanmış bir tasarım çalışması da galeride yer alıyor."
         ],
         gallery: [
           genis("ns-villa-01"),
@@ -798,7 +789,11 @@
           yatay("ns-villa-07"),
           genis("ns-villa-08"),
           yatay("ns-villa-09"),
-          yatay("ns-villa-10")
+          yatay("ns-villa-10"),
+          genis("ns-villa-b-01"),
+          yatay("ns-villa-b-02"),
+          yatay("ns-villa-b-03"),
+          genis("ns-villa-b-04")
         ]
       },
       {
@@ -1113,7 +1108,10 @@
           genis("esme-villa-04"),
           yatay("esme-villa-05"),
           yatay("esme-villa-06"),
-          genis("esme-villa-07")
+          genis("esme-villa-07"),
+          genis("esme-villa-b-01"),
+          yatay("esme-villa-b-02"),
+          yatay("esme-villa-b-03")
         ]
       },
       {
@@ -1733,6 +1731,1773 @@
         ]
       },
       {
+        slug: "eymen-kuzuluk",
+        title: "Eymen Kuzuluk",
+        tagline: "Raflı duvarları ve petek biçimli nişleriyle bir mağaza iç mekân tasarımı.",
+        location: "Kuzuluk, Akyazı / Sakarya",
+        year: "",
+        area: "",
+        category: "İç Mekân",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("eymen-01"),
+        text: [
+          "Kuzuluk'ta bir mağaza için hazırladığımız iç mekân tasarımı. Beyaz raf sistemleri, petek biçimli duvar nişleri, ahşap ve antrasit yüzeylerle ürünlerin öne çıktığı bir satış alanı kurgulandı."
+        ],
+        gallery: [
+          genis("eymen-01"),
+          yatay("eymen-02"),
+          yatay("eymen-03"),
+          genis("eymen-04")
+        ]
+      },
+      {
+        slug: "green-life",
+        title: "Green Life",
+        tagline: "Yeşil avlular çevresinde taş ve ahşap cepheli konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("green-life-01"),
+        text: [
+          "Green Life için hazırladığımız konut sitesi tasarımı. Taş kaplamalı ve ahşap detaylı bloklar, ortasında süs havuzu bulunan peyzajlı avlular çevresinde sıralanıyor.",
+          "Galeride sitenin kuşbakışı yerleşimi, gece görseli ve dairelerin salon, mutfak, yatak odası ve banyo iç mekân görselleri de yer alıyor."
+        ],
+        gallery: [
+          genis("green-life-01"),
+          yatay("green-life-02"),
+          yatay("green-life-03"),
+          genis("green-life-04"),
+          yatay("green-life-05"),
+          yatay("green-life-06"),
+          genis("green-life-07"),
+          yatay("green-life-08"),
+          yatay("green-life-09"),
+          genis("green-life-10"),
+          yatay("green-life-11"),
+          yatay("green-life-12"),
+          genis("green-life-13"),
+          genis("green-life-14")
+        ]
+      },
+      {
+        slug: "gunesler-stat-yani",
+        title: "Güneşler Stat Yanı",
+        tagline: "Havuzlu ortak bahçe çevresinde bloklardan oluşan konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("guneslerstat-01"),
+        text: [
+          "Güneşler'de stadın yanındaki parsel için hazırladığımız konut sitesi tasarımı. Bloklar; havuzlar, oyun ve spor alanları ile peyzajlı ortak bir bahçe çevresinde yerleşiyor."
+        ],
+        gallery: [
+          genis("guneslerstat-01"),
+          yatay("guneslerstat-02"),
+          yatay("guneslerstat-03"),
+          genis("guneslerstat-04"),
+          yatay("guneslerstat-05"),
+          yatay("guneslerstat-06"),
+          genis("guneslerstat-07"),
+          yatay("guneslerstat-08"),
+          yatay("guneslerstat-09"),
+          genis("guneslerstat-10")
+        ]
+      },
+      {
+        slug: "h-koc",
+        title: "H.Koç",
+        tagline: "Köşe parselde, cam korkuluklu balkonlarıyla iki bloklu konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("hkoc-01"),
+        text: [
+          "H.Koç için hazırladığımız konut tasarımı. Gri ve antrasit cepheli iki blok, cam korkuluklu balkonlar ve kırma çatılarla kurgulandı; galeride daire planı da yer alıyor."
+        ],
+        gallery: [
+          genis("hkoc-01"),
+          yatay("hkoc-02"),
+          yatay("hkoc-03"),
+          dikey("hkoc-04"),
+          yatay("hkoc-05"),
+          yatay("hkoc-06"),
+          yatay("hkoc-07")
+        ]
+      },
+      {
+        slug: "h-kotan-villa",
+        title: "H.Kotan Villa",
+        tagline: "Taş ve ahşap yüzeyli iki katlı villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("hkotan-01"),
+        text: [
+          "H.Kotan Villa için hazırladığımız tasarım. Taş kaplama, ahşap paneller ve geniş camlarla iki katlı bir villa kurgulandı."
+        ],
+        gallery: [
+          genis("hkotan-01")
+        ]
+      },
+      {
+        slug: "hacimercan-havuz",
+        title: "Hacımercan Havuz",
+        tagline: "Havuz, ahşap teras ve oturma alanlarıyla villa bahçesi tasarımı.",
+        location: "Hacımercan, Sapanca / Sakarya",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("hacimercan-01"),
+        text: [
+          "Hacımercan'da bir villa bahçesi için hazırladığımız tasarım. Taşma kenarlı havuz, ahşap teraslar, oturma grupları, kapalı otopark ve bahçe yapıları birlikte ele alındı."
+        ],
+        gallery: [
+          genis("hacimercan-01"),
+          yatay("hacimercan-02"),
+          yatay("hacimercan-03"),
+          genis("hacimercan-04"),
+          yatay("hacimercan-05"),
+          yatay("hacimercan-06"),
+          genis("hacimercan-07")
+        ]
+      },
+      {
+        slug: "hasbil-is-merkezi",
+        title: "Hasbil İş Merkezi",
+        tagline: "Cam cepheli iş merkezi ve ofis iç mekânları tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("hasbil-01"),
+        text: [
+          "Hasbil İş Merkezi için hazırladığımız tasarım. Cam cepheli bina ile giriş holü, açık ofis ve toplantı odası iç mekânları birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("hasbil-01"),
+          yatay("hasbil-02"),
+          yatay("hasbil-03"),
+          genis("hasbil-04"),
+          genis("hasbil-05")
+        ]
+      },
+      {
+        slug: "hendek-dugun-salonu",
+        title: "Hendek Düğün Salonu",
+        tagline: "Ahşap ve cam cepheli, süs havuzlu girişiyle düğün salonu tasarımı.",
+        location: "Hendek / Sakarya",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("hendek-dugun-01"),
+        text: [
+          "Hendek'te bir düğün salonu için hazırladığımız tasarım. Ahşap kaplamalı kütleler, geniş cam yüzeyler ve süs havuzlu bir giriş meydanı kurgulandı."
+        ],
+        gallery: [
+          genis("hendek-dugun-01"),
+          yatay("hendek-dugun-02"),
+          yatay("hendek-dugun-03"),
+          genis("hendek-dugun-04"),
+          genis("hendek-dugun-05")
+        ]
+      },
+      {
+        slug: "inci-moda-evi",
+        title: "İnci Moda Evi",
+        tagline: "Gelinlik mağazası için aydınlık ve sade bir iç mekân tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "İç Mekân",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("inci-moda-01"),
+        text: [
+          "İnci Moda Evi için hazırladığımız mağaza iç mekânı. Ahşap zemin, tuğla dokulu kolonlar, prova kabinleri ve oturma alanlarıyla gelinliklerin sergilendiği bir salon tasarlandı."
+        ],
+        gallery: [
+          genis("inci-moda-01"),
+          yatay("inci-moda-02"),
+          yatay("inci-moda-03"),
+          genis("inci-moda-04"),
+          genis("inci-moda-05")
+        ]
+      },
+      {
+        slug: "inko-21",
+        title: "İnko 21",
+        tagline: "Beyaz cepheli, oyun alanlı bloklardan oluşan konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("inko21-01"),
+        text: [
+          "İnko 21 için hazırladığımız konut projesi. Beyaz ve ahşap tonlu bloklar, otopark, oyun alanı ve peyzajla birlikte görselleştirildi; galeride kat planı da yer alıyor."
+        ],
+        gallery: [
+          genis("inko21-01"),
+          yatay("inko21-02"),
+          yatay("inko21-03"),
+          genis("inko21-04"),
+          yatay("inko21-05"),
+          yatay("inko21-06"),
+          genis("inko21-07"),
+          yatay("inko21-08"),
+          yatay("inko21-09"),
+          genis("inko21-10")
+        ]
+      },
+      {
+        slug: "iskender-bey-konaklari",
+        title: "İskender Bey Konakları",
+        tagline: "Havuzlu bahçesi ve bloklarıyla konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("iskenderbey-01"),
+        text: [
+          "İskender Bey Konakları için hazırladığımız konut sitesi. Beyaz ve antrasit bloklar, cam korkuluklu balkonlar, havuzlu bahçe ve otopark birlikte kurgulandı.",
+          "Galeride dairelerin salon, yatak odası, mutfak ve banyo iç mekân görselleri de yer alıyor."
+        ],
+        gallery: [
+          genis("iskenderbey-01"),
+          yatay("iskenderbey-02"),
+          yatay("iskenderbey-03"),
+          genis("iskenderbey-04"),
+          yatay("iskenderbey-05"),
+          yatay("iskenderbey-06"),
+          genis("iskenderbey-07"),
+          yatay("iskenderbey-08"),
+          yatay("iskenderbey-09"),
+          genis("iskenderbey-10"),
+          yatay("iskenderbey-11"),
+          yatay("iskenderbey-12")
+        ]
+      },
+      {
+        slug: "firin-sapanca",
+        title: "Fırın Sapanca",
+        tagline: "Zemin katı fırın olan dört katlı yapı tasarımı.",
+        location: "Sapanca / Sakarya",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("firin-sapanca-01"),
+        text: [
+          "Sapanca'da zemin katında fırın bulunan dört katlı bir yapı için hazırladığımız tasarım; gündüz ve gece görselleriyle birlikte."
+        ],
+        gallery: [
+          genis("firin-sapanca-01"),
+          yatay("firin-sapanca-02"),
+          yatay("firin-sapanca-03"),
+          genis("firin-sapanca-04"),
+          genis("firin-sapanca-05")
+        ]
+      },
+      {
+        slug: "erenler-is-yeri",
+        title: "Erenler İş Yeri",
+        tagline: "Kemerli zemin katı ve teraslı üst katlarıyla ticari yapı tasarımı.",
+        location: "Erenler / Sakarya",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("erenler-isyeri-01"),
+        text: [
+          "Erenler'de bir köşe parsel için hazırladığımız ticari yapı tasarımı. Kemerli zemin kat dükkânları, teraslı üst katlar ve gece aydınlatması birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("erenler-isyeri-01"),
+          yatay("erenler-isyeri-02"),
+          yatay("erenler-isyeri-03"),
+          dikey("erenler-isyeri-04"),
+          yatay("erenler-isyeri-05"),
+          yatay("erenler-isyeri-06"),
+          yatay("erenler-isyeri-07")
+        ]
+      },
+      {
+        slug: "k-kotan-is-yeri",
+        title: "K.Kotan İş Yeri",
+        tagline: "Kavisli çatısı ve renkli cam cephesiyle köşe binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kkotan-01"),
+        text: [
+          "K.Kotan İş Yeri için hazırladığımız tasarım. Kavisli çatı çizgisi, renkli cam paneller ve zemin kattaki kafe alanıyla köşe parselde dikkat çeken bir yapı kurgulandı."
+        ],
+        gallery: [
+          genis("kkotan-01"),
+          yatay("kkotan-02"),
+          yatay("kkotan-03"),
+          genis("kkotan-04"),
+          yatay("kkotan-05"),
+          yatay("kkotan-06"),
+          genis("kkotan-07")
+        ]
+      },
+      {
+        slug: "karaaslan-hafriyat",
+        title: "Karaaslan Hafriyat",
+        tagline: "Zemin katı dükkânlı, kavisli köşeli konut bloğu tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("karaaslan-01"),
+        text: [
+          "Karaaslan Hafriyat için hazırladığımız tasarım. Zemin katta dükkânlar, üst katlarda cam korkuluklu balkonlu daireler ve kavisli bir köşe kurgulandı."
+        ],
+        gallery: [
+          genis("karaaslan-01"),
+          yatay("karaaslan-02"),
+          yatay("karaaslan-03"),
+          genis("karaaslan-04"),
+          genis("karaaslan-05")
+        ]
+      },
+      {
+        slug: "karat-54",
+        title: "Karat 54",
+        tagline: "Havuzlu bahçe çevresinde bloklardan oluşan konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("karat54-01"),
+        text: [
+          "Karat 54 için hazırladığımız konut sitesi. Beyaz, antrasit ve ahşap yüzeyli bloklar; havuzlu bahçe, giriş holü ve otoparkla birlikte tasarlandı."
+        ],
+        gallery: [
+          genis("karat54-01"),
+          yatay("karat54-02"),
+          yatay("karat54-03"),
+          genis("karat54-04"),
+          yatay("karat54-05"),
+          yatay("karat54-06"),
+          genis("karat54-07"),
+          yatay("karat54-08"),
+          yatay("karat54-09")
+        ]
+      },
+      {
+        slug: "katar-villa",
+        title: "Katar Villa",
+        tagline: "Geniş saçaklı, iki katlı modern villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("katar-01"),
+        text: [
+          "Katar Villa için hazırladığımız tasarım. Geniş saçak, cam yüzeyler ve koyu doğramalarla iki katlı modern bir villa kurgulandı."
+        ],
+        gallery: [
+          genis("katar-01")
+        ]
+      },
+      {
+        slug: "kav-as",
+        title: "KAV A.Ş",
+        tagline: "Kavisli beyaz balkonlarıyla konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kav-as-01"),
+        text: [
+          "KAV A.Ş için hazırladığımız konut tasarımı. Tuğla ve antrasit yüzeyler, kavisli beyaz balkon bantları ve peyzajlı bahçe birlikte kurgulandı."
+        ],
+        gallery: [
+          genis("kav-as-01"),
+          yatay("kav-as-02"),
+          yatay("kav-as-03"),
+          genis("kav-as-04"),
+          yatay("kav-as-05"),
+          yatay("kav-as-06"),
+          genis("kav-as-07")
+        ]
+      },
+      {
+        slug: "kav-diamond",
+        title: "KAV Diamond",
+        tagline: "S biçimli balkon bantları ve havuzlu avlusuyla konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kav-diamond-01"),
+        text: [
+          "KAV Diamond için hazırladığımız konut sitesi. Bloklar, cepheyi saran S biçimli beyaz balkon bantlarıyla öne çıkıyor; avluda havuz, oturma alanları ve yürüyüş yolları var."
+        ],
+        gallery: [
+          genis("kav-diamond-01"),
+          yatay("kav-diamond-02"),
+          yatay("kav-diamond-03"),
+          genis("kav-diamond-04"),
+          yatay("kav-diamond-05"),
+          yatay("kav-diamond-06"),
+          genis("kav-diamond-07"),
+          yatay("kav-diamond-08"),
+          yatay("kav-diamond-09"),
+          genis("kav-diamond-10")
+        ]
+      },
+      {
+        slug: "kavsut-insaat",
+        title: "Kavşut İnşaat",
+        tagline: "Havuzlu ortak bahçe çevresinde dalgalı balkonlu bloklar.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kavsut-01"),
+        text: [
+          "Kavşut İnşaat için hazırladığımız konut sitesi. Dalgalı balkon çizgili bloklar; havuz, oyun alanı ve peyzajlı ortak bahçe çevresinde yerleşiyor. Kuşbakışı görsellerde sitenin arsaya yerleşimi de çalışıldı."
+        ],
+        gallery: [
+          genis("kavsut-01"),
+          yatay("kavsut-02"),
+          yatay("kavsut-03"),
+          genis("kavsut-04"),
+          yatay("kavsut-05"),
+          yatay("kavsut-06"),
+          genis("kavsut-07"),
+          yatay("kavsut-08"),
+          yatay("kavsut-09"),
+          genis("kavsut-10")
+        ]
+      },
+      {
+        slug: "ks-is-merkezi",
+        title: "K.S İş Merkezi",
+        tagline: "Koyu panel cepheli, iki katlı ofis ve mağaza binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("ks-ism-01"),
+        text: [
+          "K.S İş Merkezi için hazırladığımız tasarım. Koyu gri panel cephe, geniş camlı zemin kat dükkânları ve üst kat ofisleriyle iki katlı bir ticari yapı kurgulandı."
+        ],
+        gallery: [
+          genis("ks-ism-01"),
+          yatay("ks-ism-02"),
+          yatay("ks-ism-03"),
+          genis("ks-ism-04"),
+          yatay("ks-ism-05"),
+          yatay("ks-ism-06"),
+          genis("ks-ism-07"),
+          genis("ks-ism-08")
+        ]
+      },
+      {
+        slug: "korupark-2",
+        title: "Korupark 2",
+        tagline: "Havuzlu bahçeli, bloklardan oluşan konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("korupark2-01"),
+        text: [
+          "Korupark 2 için hazırladığımız konut sitesi. Ahşap ve gri cepheli bloklar, havuz, otopark ve peyzajla birlikte görselleştirildi."
+        ],
+        gallery: [
+          genis("korupark2-01"),
+          yatay("korupark2-02"),
+          yatay("korupark2-03"),
+          genis("korupark2-04"),
+          yatay("korupark2-05"),
+          yatay("korupark2-06"),
+          genis("korupark2-07"),
+          genis("korupark2-08")
+        ]
+      },
+      {
+        slug: "kotan-gunesler",
+        title: "Kotan Güneşler",
+        tagline: "Ortak avlu çevresinde kırma çatılı bloklardan oluşan konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kotan-gunesler-01"),
+        text: [
+          "Kotan Güneşler için hazırladığımız konut projesi. Taş, ahşap ve beyaz yüzeyli bloklar kırma çatılarla örtüldü; galeride kuşbakışı yerleşim ve kat planları da yer alıyor."
+        ],
+        gallery: [
+          genis("kotan-gunesler-01"),
+          yatay("kotan-gunesler-02"),
+          yatay("kotan-gunesler-03"),
+          genis("kotan-gunesler-04"),
+          yatay("kotan-gunesler-05"),
+          yatay("kotan-gunesler-06"),
+          genis("kotan-gunesler-07"),
+          yatay("kotan-gunesler-08"),
+          yatay("kotan-gunesler-09"),
+          genis("kotan-gunesler-10")
+        ]
+      },
+      {
+        slug: "kotan-otel",
+        title: "Kotan Otel",
+        tagline: "Zemin katında restoranı olan otel binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kotan-otel-01"),
+        text: [
+          "Kotan Otel için hazırladığımız tasarım. Koyu cepheli otel binası, zemin kattaki restoran ve giriş saçağıyla gündüz ve gece görselleştirildi."
+        ],
+        gallery: [
+          genis("kotan-otel-01"),
+          genis("kotan-otel-02")
+        ]
+      },
+      {
+        slug: "kotanoglu-pasa-dayi",
+        title: "Kotanoğlu Paşa Dayı",
+        tagline: "Oyun alanlı bahçesiyle iki bloklu konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("pasa-dayi-01"),
+        text: [
+          "Kotanoğlu Paşa Dayı için hazırladığımız konut projesi. Antrasit ve beyaz cepheli iki blok, oyun alanı ve otoparkla birlikte tasarlandı; galeride kat planları da yer alıyor."
+        ],
+        gallery: [
+          genis("pasa-dayi-01"),
+          yatay("pasa-dayi-02"),
+          yatay("pasa-dayi-03"),
+          genis("pasa-dayi-04"),
+          yatay("pasa-dayi-05"),
+          yatay("pasa-dayi-06"),
+          genis("pasa-dayi-07"),
+          genis("pasa-dayi-08")
+        ]
+      },
+      {
+        slug: "kofteci-ethem",
+        title: "Köfteci Ethem",
+        tagline: "Cam korkuluklu teraslarıyla iki katlı yapı tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kofteci-ethem-01"),
+        text: [
+          "Köfteci Ethem için hazırladığımız tasarım. Açık renkli cephe, cam korkuluklu teraslar ve bahçe düzenlemesiyle iki katlı bir yapı kurgulandı."
+        ],
+        gallery: [
+          genis("kofteci-ethem-01")
+        ]
+      },
+      {
+        slug: "kurtkoy-havuz",
+        title: "Kurtköy Havuz",
+        tagline: "Şezlonglu oturma alanıyla bahçe havuzu tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kurtkoy-havuz-01"),
+        text: [
+          "Kurtköy'de bir bahçe için hazırladığımız havuz tasarımı; oval havuz, ahşap güverte ve şezlonglu oturma alanı birlikte kurgulandı."
+        ],
+        gallery: [
+          genis("kurtkoy-havuz-01")
+        ]
+      },
+      {
+        slug: "kurucesme-villa",
+        title: "Kuruçeşme Villa",
+        tagline: "Havuzlu bahçesiyle modern ve klasik iki villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kurucesme-01"),
+        text: [
+          "Kuruçeşme Villa için hazırladığımız iki ayrı tasarım çalışması: biri ahşap ve beyaz yüzeyli modern, diğeri klasik çizgide; ikisi de havuzlu bahçesiyle."
+        ],
+        gallery: [
+          genis("kurucesme-01"),
+          genis("kurucesme-02")
+        ]
+      },
+      {
+        slug: "locca",
+        title: "Locca",
+        tagline: "Klasik söveli cepheleriyle köşe parselde konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("locca-01"),
+        text: [
+          "Locca için hazırladığımız konut tasarımı. Beyaz cephe, desenli paneller, söveler ve balkonlarla köşe parselde üç katlı bir yapı kurgulandı."
+        ],
+        gallery: [
+          genis("locca-01"),
+          yatay("locca-02"),
+          yatay("locca-03"),
+          genis("locca-04"),
+          yatay("locca-05"),
+          yatay("locca-06")
+        ]
+      },
+      {
+        slug: "kurtkoy-is-yeri",
+        title: "Kurtköy İş Yeri",
+        tagline: "Kemerli cephesiyle tek katlı ticari yapı tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("kurtkoy-isyeri-01"),
+        text: [
+          "Kurtköy'de bir iş yeri için hazırladığımız tasarım. Kemerli büyük camlar ve açık renkli cepheyle köşe parselde tek katlı bir yapı kurgulandı."
+        ],
+        gallery: [
+          genis("kurtkoy-isyeri-01"),
+          genis("kurtkoy-isyeri-02")
+        ]
+      },
+      {
+        slug: "me-villa-ilmiye",
+        title: "M.E Villa İlmiye",
+        tagline: "Beşik çatılı, ahşap ve beyaz yüzeyli iki villa tasarımı.",
+        location: "İlmiye, Sapanca / Sakarya",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("me-ilmiye-01"),
+        text: [
+          "İlmiye'de bir arsa için hazırladığımız beşik çatılı iki villa. Ahşap kaplama, beyaz yüzeyler ve geniş camlar bahçe düzenlemesiyle birlikte görselleştirildi."
+        ],
+        gallery: [
+          genis("me-ilmiye-01"),
+          genis("me-ilmiye-02")
+        ]
+      },
+      {
+        slug: "me-villa",
+        title: "M.E Villa",
+        tagline: "Havuzlu bahçesiyle iki katlı villa tasarımı ve planları.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("me-villa-01"),
+        text: [
+          "M.E Villa için hazırladığımız tasarım. İki katlı villa, havuzlu bahçe ve teraslarla kurgulandı; galeride vaziyet planı ile zemin ve birinci kat planları da yer alıyor."
+        ],
+        gallery: [
+          genis("me-villa-01"),
+          yatay("me-villa-02"),
+          yatay("me-villa-03"),
+          dikey("me-villa-04"),
+          dikey("me-villa-05")
+        ]
+      },
+      {
+        slug: "mam-villa",
+        title: "M.A.M Villa",
+        tagline: "Taş ve ahşap yüzeyli villa tasarımı ve iç mekânları.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("mam-villa-01"),
+        text: [
+          "M.A.M Villa için hazırladığımız tasarım. Taş ve ahşap kaplamalı iki katlı villa ile yatak odaları ve salon iç mekânları birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("mam-villa-01"),
+          yatay("mam-villa-02"),
+          yatay("mam-villa-03"),
+          genis("mam-villa-04"),
+          yatay("mam-villa-05"),
+          yatay("mam-villa-06"),
+          genis("mam-villa-07"),
+          genis("mam-villa-08")
+        ]
+      },
+      {
+        slug: "mam-havuz",
+        title: "M.A.M Havuz",
+        tagline: "Kapalı havuz ve konut iç mekânları tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "İç Mekân",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("mam-havuz-01"),
+        text: [
+          "M.A.M Havuz için hazırladığımız tasarım. Kapalı yüzme havuzu, tek katlı bir konut ve odaların iç mekânları birlikte kurgulandı."
+        ],
+        gallery: [
+          genis("mam-havuz-01"),
+          yatay("mam-havuz-02"),
+          yatay("mam-havuz-03"),
+          genis("mam-havuz-04"),
+          yatay("mam-havuz-05"),
+          yatay("mam-havuz-06"),
+          genis("mam-havuz-07"),
+          yatay("mam-havuz-08"),
+          yatay("mam-havuz-09"),
+          genis("mam-havuz-10"),
+          genis("mam-havuz-11")
+        ]
+      },
+      {
+        slug: "maq-villa",
+        title: "M.A.Q Villa",
+        tagline: "Eğimli arazide klasik çizgide çok katlı villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("maq-villa-01"),
+        text: [
+          "M.A.Q Villa için hazırladığımız tasarım. Eğimli araziye kademeli oturan, klasik söveli ve korkuluklu çok katlı bir villa kurgulandı; galeride iç mekân görselleri de yer alıyor."
+        ],
+        gallery: [
+          genis("maq-villa-01"),
+          yatay("maq-villa-02"),
+          yatay("maq-villa-03"),
+          genis("maq-villa-04"),
+          yatay("maq-villa-05"),
+          yatay("maq-villa-06"),
+          genis("maq-villa-07"),
+          yatay("maq-villa-08"),
+          yatay("maq-villa-09")
+        ]
+      },
+      {
+        slug: "serdivan-konut",
+        title: "Serdivan Konut",
+        tagline: "Ahşap ve antrasit cepheli üç katlı konut tasarımı.",
+        location: "Serdivan / Sakarya",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("serdivan-konut-01"),
+        text: [
+          "Serdivan'da bir parsel için hazırladığımız üç katlı konut tasarımı; ahşap ve antrasit yüzeyler ile cam korkuluklu balkonlar."
+        ],
+        gallery: [
+          genis("serdivan-konut-01")
+        ]
+      },
+      {
+        slug: "md-sapanca",
+        title: "M.D Sapanca",
+        tagline: "Üç bloklu, otoparklı konut sitesi tasarımı ve planları.",
+        location: "Sapanca / Sakarya",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("md-sapanca-01"),
+        text: [
+          "Sapanca'da üç bloklu bir konut sitesi için hazırladığımız tasarım. Gri ve beyaz cepheli bloklar, ortak otopark ve peyzajla birlikte kurgulandı; galeride vaziyet ve kat planları da yer alıyor."
+        ],
+        gallery: [
+          genis("md-sapanca-01"),
+          yatay("md-sapanca-02"),
+          yatay("md-sapanca-03"),
+          genis("md-sapanca-04"),
+          yatay("md-sapanca-05"),
+          yatay("md-sapanca-06"),
+          genis("md-sapanca-07"),
+          yatay("md-sapanca-08"),
+          yatay("md-sapanca-09"),
+          genis("md-sapanca-10")
+        ]
+      },
+      {
+        slug: "acielmali-villa",
+        title: "Acıelmalı Villa",
+        tagline: "Geniş saçaklı ve havuzlu, tek katlı modern villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("acielmali-01"),
+        text: [
+          "Acıelmalı Villa için hazırladığımız tasarım. Geniş saçaklar, cam yüzeyler, ahşap ve taş detaylar; teraslı ve havuzlu bir bahçeyle birlikte kurgulandı."
+        ],
+        gallery: [
+          genis("acielmali-01"),
+          yatay("acielmali-02"),
+          yatay("acielmali-03"),
+          genis("acielmali-04"),
+          yatay("acielmali-05"),
+          yatay("acielmali-06"),
+          genis("acielmali-07"),
+          genis("acielmali-08")
+        ]
+      },
+      {
+        slug: "point",
+        title: "Point",
+        tagline: "Oyun alanlı bahçesiyle bloklardan oluşan konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("point-01"),
+        text: [
+          "Point için hazırladığımız konut sitesi. Antrasit ve ahşap tonlu bloklar, sokak cepheleri, oyun alanı ve peyzajla birlikte görselleştirildi."
+        ],
+        gallery: [
+          genis("point-01"),
+          yatay("point-02"),
+          yatay("point-03"),
+          genis("point-04"),
+          yatay("point-05"),
+          yatay("point-06"),
+          genis("point-07"),
+          yatay("point-08"),
+          yatay("point-09"),
+          genis("point-10")
+        ]
+      },
+      {
+        slug: "royal",
+        title: "Royal",
+        tagline: "Ahşap ve beyaz cepheli bloklardan oluşan konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("royal-01"),
+        text: [
+          "Royal için hazırladığımız konut sitesi. Ahşap, beyaz ve antrasit yüzeyli bloklar; sokak cepheleri, kuşbakışı yerleşim ve peyzajla birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("royal-01"),
+          yatay("royal-02"),
+          yatay("royal-03"),
+          genis("royal-04"),
+          yatay("royal-05"),
+          yatay("royal-06"),
+          genis("royal-07"),
+          yatay("royal-08"),
+          yatay("royal-09"),
+          genis("royal-10"),
+          genis("royal-11")
+        ]
+      },
+      {
+        slug: "s-villa",
+        title: "S. Villa",
+        tagline: "Havuzlu bahçesiyle ahşap ve taş yüzeyli villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("s-villa-01"),
+        text: [
+          "S. Villa için hazırladığımız tasarım. Ahşap ve taş kaplamalı cephe, kavisli havuz ve peyzajlı bahçe gündüz ve akşam ışığıyla görselleştirildi."
+        ],
+        gallery: [
+          genis("s-villa-01"),
+          yatay("s-villa-02"),
+          yatay("s-villa-03"),
+          genis("s-villa-04"),
+          yatay("s-villa-05"),
+          yatay("s-villa-06"),
+          genis("s-villa-07")
+        ]
+      },
+      {
+        slug: "sakarya-il-saglik-merkezi",
+        title: "Sakarya İl Sağlık Merkezi",
+        tagline: "Cam cepheli ve yeşil teraslı sağlık binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Kamu",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("il-saglik-01"),
+        text: [
+          "Sakarya İl Sağlık Merkezi için hazırladığımız tasarım çalışması. Cam cepheli zemin kat, taş kaplamalı üst katlar ve yeşil teraslarla kurgulandı."
+        ],
+        gallery: [
+          genis("il-saglik-01"),
+          yatay("il-saglik-02"),
+          yatay("il-saglik-03")
+        ]
+      },
+      {
+        slug: "sapanca-villa",
+        title: "Sapanca Villa",
+        tagline: "Kavisli beyaz çerçeveli modern villalar tasarımı.",
+        location: "Sapanca / Sakarya",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("sapanca-villa-01"),
+        text: [
+          "Sapanca'da bir villa grubu için hazırladığımız tasarım. Kavisli beyaz çerçeveler, ahşap yüzeyler ve havuzlu bahçeler; kuşbakışı görselde villaların yerleşimi de görülüyor."
+        ],
+        gallery: [
+          genis("sapanca-villa-01"),
+          yatay("sapanca-villa-02"),
+          yatay("sapanca-villa-03"),
+          genis("sapanca-villa-04"),
+          yatay("sapanca-villa-05"),
+          yatay("sapanca-villa-06")
+        ]
+      },
+      {
+        slug: "say",
+        title: "Say",
+        tagline: "Peyzajlı avlusuyla siyah-beyaz cepheli konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("say-01"),
+        text: [
+          "Say için hazırladığımız konut sitesi. Siyah, beyaz ve ahşap yüzeyli bloklar; peyzajlı avlu, oyun alanı ve kuşbakışı yerleşimle birlikte görselleştirildi."
+        ],
+        gallery: [
+          genis("say-01"),
+          yatay("say-02"),
+          yatay("say-03"),
+          genis("say-04"),
+          yatay("say-05"),
+          yatay("say-06"),
+          genis("say-07"),
+          yatay("say-08"),
+          yatay("say-09"),
+          genis("say-10")
+        ]
+      },
+      {
+        slug: "say-yazlik",
+        title: "Say Yazlık",
+        tagline: "Taş ve ahşap cepheli, havuzlu konut tasarımı.",
+        location: "Yazlık, Serdivan / Sakarya",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("say-yazlik-01"),
+        text: [
+          "Say Yazlık için hazırladığımız konut tasarımı; taş, ahşap ve beyaz yüzeyler, havuzlu bahçe ve tabelalı giriş."
+        ],
+        gallery: [
+          genis("say-yazlik-01"),
+          genis("say-yazlik-02")
+        ]
+      },
+      {
+        slug: "selahiye-villa",
+        title: "Selahiye Villa",
+        tagline: "Ahşap ve antrasit yüzeyli modern villalar tasarımı ve planları.",
+        location: "Selahiye, Serdivan / Sakarya",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("selahiye-01"),
+        text: [
+          "Selahiye'de bir villa grubu için hazırladığımız tasarım. Ahşap, antrasit ve beyaz yüzeyli iki katlı villalar; kuşbakışı yerleşim ile zemin ve birinci kat planları da galeride yer alıyor."
+        ],
+        gallery: [
+          genis("selahiye-01"),
+          yatay("selahiye-02"),
+          yatay("selahiye-03"),
+          genis("selahiye-04"),
+          yatay("selahiye-05"),
+          yatay("selahiye-06"),
+          genis("selahiye-07"),
+          yatay("selahiye-08"),
+          yatay("selahiye-09"),
+          genis("selahiye-10")
+        ]
+      },
+      {
+        slug: "sb-is-yeri",
+        title: "S.B İş Yeri",
+        tagline: "Kubbeli köşesi ve cam vitrinleriyle ticari yapı tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("sb-isyeri-01"),
+        text: [
+          "S.B İş Yeri için hazırladığımız tasarım. Koyu cepheli, kubbeli köşesi ve geniş cam vitrinleriyle iki katlı bir ticari yapı kurgulandı."
+        ],
+        gallery: [
+          genis("sb-isyeri-01"),
+          genis("sb-isyeri-02")
+        ]
+      },
+      {
+        slug: "serdivan-is-yeri",
+        title: "Serdivan İş Yeri",
+        tagline: "Desenli cephesiyle uzun bir ticari yapı tasarımı.",
+        location: "Serdivan / Sakarya",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("serdivan-isyeri-01"),
+        text: [
+          "Serdivan'da bir iş yeri için hazırladığımız tasarım. Ahşap ve beyaz panellerle desenli bir cephe, zemin katta dükkânlar ve otopark kurgulandı."
+        ],
+        gallery: [
+          genis("serdivan-isyeri-01"),
+          genis("serdivan-isyeri-02")
+        ]
+      },
+      {
+        slug: "shell-istasyon",
+        title: "Shell İstasyon",
+        tagline: "Akaryakıt istasyonu ve market binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("shell-01"),
+        text: [
+          "Bir Shell akaryakıt istasyonu için hazırladığımız tasarım; pompa saçağı, market binası ve yerleşim birlikte görselleştirildi."
+        ],
+        gallery: [
+          genis("shell-01"),
+          yatay("shell-02"),
+          yatay("shell-03"),
+          genis("shell-04")
+        ]
+      },
+      {
+        slug: "s-s-line",
+        title: "S-S Line",
+        tagline: "Oyun alanlı bahçesiyle bloklardan oluşan konut tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("ss-line-01"),
+        text: [
+          "S-S Line için hazırladığımız konut projesi. Beyaz, gri ve ahşap yüzeyli bloklar sokak cepheleri, oyun alanı ve kuşbakışı yerleşimle birlikte gece ve gündüz görselleştirildi."
+        ],
+        gallery: [
+          genis("ss-line-01"),
+          yatay("ss-line-02"),
+          yatay("ss-line-03"),
+          genis("ss-line-04"),
+          yatay("ss-line-05"),
+          yatay("ss-line-06"),
+          genis("ss-line-07"),
+          yatay("ss-line-08"),
+          yatay("ss-line-09"),
+          genis("ss-line-10"),
+          yatay("ss-line-11"),
+          yatay("ss-line-12")
+        ]
+      },
+      {
+        slug: "tekeler",
+        title: "Tekeler",
+        tagline: "Cam korkuluklu balkonlarıyla konut sitesi tasarımı ve planları.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("tekeler-01"),
+        text: [
+          "Tekeler için hazırladığımız konut projesi. Beyaz, antrasit ve ahşap yüzeyli bloklar; galeride vaziyet ve kat planları da yer alıyor."
+        ],
+        gallery: [
+          genis("tekeler-01"),
+          yatay("tekeler-02"),
+          yatay("tekeler-03"),
+          genis("tekeler-04"),
+          yatay("tekeler-05"),
+          yatay("tekeler-06"),
+          genis("tekeler-07"),
+          genis("tekeler-08")
+        ]
+      },
+      {
+        slug: "topcuoglu-53",
+        title: "Topçuoğlu 53",
+        tagline: "Ağaçlık arazide sıralanan havuzlu villalardan oluşan site tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("topcuoglu53-01"),
+        text: [
+          "Topçuoğlu 53 için hazırladığımız villa sitesi. Ahşap ve beyaz yüzeyli iki katlı villalar, havuzlu bahçeler ve site yolları kuşbakışı ve yakın görsellerle çalışıldı."
+        ],
+        gallery: [
+          genis("topcuoglu53-01"),
+          yatay("topcuoglu53-02"),
+          yatay("topcuoglu53-03"),
+          genis("topcuoglu53-04"),
+          yatay("topcuoglu53-05"),
+          yatay("topcuoglu53-06"),
+          genis("topcuoglu53-07"),
+          yatay("topcuoglu53-08"),
+          yatay("topcuoglu53-09"),
+          genis("topcuoglu53-10"),
+          yatay("topcuoglu53-11"),
+          yatay("topcuoglu53-12"),
+          genis("topcuoglu53-13")
+        ]
+      },
+      {
+        slug: "truva",
+        title: "Truva",
+        tagline: "Kavisli cepheli, zemin katı kafeli konut binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("truva-01"),
+        text: [
+          "Truva için hazırladığımız konut projesi. Kavisli köşeler, desenli korkuluklar ve zemin kattaki kafe ile köşe parselde çok katlı bir yapı kurgulandı.",
+          "Galeride spor salonu, kapalı havuz ve otopark iç mekân görselleri de yer alıyor."
+        ],
+        gallery: [
+          genis("truva-01"),
+          yatay("truva-02"),
+          yatay("truva-03"),
+          dikey("truva-04"),
+          yatay("truva-05"),
+          yatay("truva-06"),
+          yatay("truva-07"),
+          genis("truva-08"),
+          yatay("truva-09"),
+          yatay("truva-10"),
+          genis("truva-11"),
+          yatay("truva-12"),
+          yatay("truva-13"),
+          genis("truva-14"),
+          genis("truva-15")
+        ]
+      },
+      {
+        slug: "on-7-hotel",
+        title: "On 7 Hotel",
+        tagline: "Yeşil cepheli otel binası ve oda iç mekânları tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("on7-01"),
+        text: [
+          "On 7 Hotel için hazırladığımız tasarım. Taş ve dikey bahçe kaplı cephe, süs havuzlu giriş meydanı ve oda iç mekânları birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("on7-01"),
+          yatay("on7-02"),
+          yatay("on7-03"),
+          genis("on7-04"),
+          yatay("on7-05"),
+          yatay("on7-06"),
+          genis("on7-07"),
+          yatay("on7-08"),
+          yatay("on7-09"),
+          genis("on7-10"),
+          yatay("on7-11"),
+          yatay("on7-12"),
+          genis("on7-13")
+        ]
+      },
+      {
+        slug: "tuzla-apartman",
+        title: "Tuzla Apartman",
+        tagline: "Kavisli balkonlu, üç katlı apartman tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("tuzla-apt-01"),
+        text: [
+          "Tuzla Apartman için hazırladığımız tasarım. Kavisli beyaz balkonlar, cam korkuluklar ve ahşap detaylarla köşe parselde üç katlı bir yapı kurgulandı."
+        ],
+        gallery: [
+          genis("tuzla-apt-01"),
+          yatay("tuzla-apt-02"),
+          yatay("tuzla-apt-03"),
+          genis("tuzla-apt-04"),
+          genis("tuzla-apt-05")
+        ]
+      },
+      {
+        slug: "usl-city",
+        title: "USL City",
+        tagline: "Havuzlu bahçesiyle konut sitesi tasarımı, planları ve iç mekânları.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("usl-city-01"),
+        text: [
+          "USL City için hazırladığımız konut sitesi. Antrasit ve ahşap cepheli bloklar havuzlu bir bahçe çevresinde yerleşiyor; galeride kat planları ve daire iç mekânları da yer alıyor."
+        ],
+        gallery: [
+          genis("usl-city-01"),
+          yatay("usl-city-02"),
+          yatay("usl-city-03"),
+          genis("usl-city-04"),
+          yatay("usl-city-05"),
+          yatay("usl-city-06"),
+          genis("usl-city-07"),
+          yatay("usl-city-08"),
+          yatay("usl-city-09"),
+          genis("usl-city-10")
+        ]
+      },
+      {
+        slug: "ud-konut",
+        title: "Ü.D Konut",
+        tagline: "Kemerli cepheli bina ve uzun konut bloğu tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("ud-konut-01"),
+        text: [
+          "Ü.D için hazırladığımız konut tasarımı. Kemerli büyük pencereli bir yapı ile cam korkuluklu balkonlu uzun bir konut bloğu birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("ud-konut-01"),
+          yatay("ud-konut-02"),
+          yatay("ud-konut-03"),
+          genis("ud-konut-04"),
+          yatay("ud-konut-05"),
+          yatay("ud-konut-06"),
+          genis("ud-konut-07")
+        ]
+      },
+      {
+        slug: "vk-villa",
+        title: "V.K Villa",
+        tagline: "Sarmaşıklı terasları ve gizli aydınlatmasıyla villa tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("vk-villa-01"),
+        text: [
+          "V.K Villa için hazırladığımız tasarım. Beyaz ve taş yüzeyler, sarmaşıklı teraslar ve saçak altı aydınlatmasıyla iki katlı bir villa kurgulandı."
+        ],
+        gallery: [
+          genis("vk-villa-01"),
+          yatay("vk-villa-02"),
+          yatay("vk-villa-03"),
+          genis("vk-villa-04")
+        ]
+      },
+      {
+        slug: "vox",
+        title: "Vox",
+        tagline: "Avlulu bloklardan oluşan konut sitesi tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("vox-01"),
+        text: [
+          "Vox için hazırladığımız konut sitesi. Ahşap ve antrasit yüzeyli bloklar ortak bir avlu çevresinde yerleşiyor; kuşbakışı görsellerde sitenin planı da görülüyor."
+        ],
+        gallery: [
+          genis("vox-01"),
+          yatay("vox-02"),
+          yatay("vox-03"),
+          genis("vox-04"),
+          yatay("vox-05"),
+          yatay("vox-06"),
+          genis("vox-07"),
+          yatay("vox-08"),
+          yatay("vox-09"),
+          genis("vox-10")
+        ]
+      },
+      {
+        slug: "work-in",
+        title: "Work In",
+        tagline: "Ahşap çıtalı cephesiyle ofis ve dükkân binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("work-in-01"),
+        text: [
+          "Work In için hazırladığımız tasarım. Ahşap çıtalı ve cam cepheli, zemin katı dükkânlı bir ticari yapı köşe parselde kurgulandı."
+        ],
+        gallery: [
+          genis("work-in-01"),
+          yatay("work-in-02"),
+          yatay("work-in-03"),
+          genis("work-in-04"),
+          yatay("work-in-05"),
+          yatay("work-in-06")
+        ]
+      },
+      {
+        slug: "yanikkoy-villa",
+        title: "Yanıkköy Villa",
+        tagline: "Havuzlu bahçesiyle modern villa tasarımı ve iç mekânları.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("yanikkoy-01"),
+        text: [
+          "Yanıkköy'de bir villa için hazırladığımız tasarım. Gri, ahşap ve beyaz yüzeyli iki katlı villa; havuz, teras ve bahçeyle birlikte kurgulandı.",
+          "Galeride salon, mutfak ve yatak odası iç mekân görselleri de yer alıyor."
+        ],
+        gallery: [
+          genis("yanikkoy-01"),
+          yatay("yanikkoy-02"),
+          yatay("yanikkoy-03"),
+          genis("yanikkoy-04"),
+          yatay("yanikkoy-05"),
+          yatay("yanikkoy-06"),
+          genis("yanikkoy-07"),
+          yatay("yanikkoy-08"),
+          yatay("yanikkoy-09"),
+          genis("yanikkoy-10"),
+          yatay("yanikkoy-11"),
+          yatay("yanikkoy-12")
+        ]
+      },
+      {
+        slug: "yaprakpen",
+        title: "Yaprakpen",
+        tagline: "Yeşil cepheli fabrika ve ofis binası tasarımı.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Ticari",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("yaprakpen-01"),
+        text: [
+          "Yaprakpen için hazırladığımız tasarım. Dikey bahçe panelleri ve ahşap çerçeveli cephesiyle bir üretim ve ofis binası kurgulandı."
+        ],
+        gallery: [
+          genis("yaprakpen-01"),
+          yatay("yaprakpen-02"),
+          yatay("yaprakpen-03")
+        ]
+      },
+      {
+        slug: "balikesir-apartman",
+        title: "Balıkesir Apartman",
+        tagline: "Teraslı apartman tasarımı ve daire iç mekânları.",
+        location: "Balıkesir",
+        year: "",
+        area: "",
+        category: "Konut",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("balikesir-apt-01"),
+        text: [
+          "Balıkesir'de bir apartman için hazırladığımız tasarım. Teraslı ve bahçeli bina ile salon, yatak odası, mutfak ve banyo iç mekânları birlikte çalışıldı."
+        ],
+        gallery: [
+          genis("balikesir-apt-01"),
+          yatay("balikesir-apt-02"),
+          yatay("balikesir-apt-03"),
+          genis("balikesir-apt-04"),
+          yatay("balikesir-apt-05"),
+          yatay("balikesir-apt-06"),
+          genis("balikesir-apt-07"),
+          yatay("balikesir-apt-08"),
+          yatay("balikesir-apt-09")
+        ]
+      },
+      {
+        slug: "yazlik-12",
+        title: "Yazlık 12",
+        tagline: "Havuzlu ve ateş çukurlu bahçeleriyle villa sitesi tasarımı.",
+        location: "Yazlık, Serdivan / Sakarya",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("yazlik12-01"),
+        text: [
+          "Yazlık 12 için hazırladığımız villa sitesi. Geniş saçaklı iki katlı villalar, havuzlu ve ateş çukurlu bahçeler ve site girişi gece ve gündüz ışığıyla görselleştirildi."
+        ],
+        gallery: [
+          genis("yazlik12-01"),
+          yatay("yazlik12-02"),
+          yatay("yazlik12-03"),
+          genis("yazlik12-04"),
+          yatay("yazlik12-05"),
+          yatay("yazlik12-06"),
+          genis("yazlik12-07"),
+          yatay("yazlik12-08"),
+          yatay("yazlik12-09"),
+          genis("yazlik12-10"),
+          yatay("yazlik12-11"),
+          yatay("yazlik12-12"),
+          genis("yazlik12-13"),
+          genis("yazlik12-14")
+        ]
+      },
+      {
+        slug: "zk-villa",
+        title: "Z.K Villa",
+        tagline: "Tek katlı taş ve ahşap yüzeyli villa tasarımı ve iç mekânları.",
+        location: "",
+        year: "",
+        area: "",
+        category: "Villa",
+        status: "Tasarım",
+        durum: "",
+        client: "Özel",
+        featured: false,
+        showcase: false,
+        cover: g("zk-villa-01"),
+        text: [
+          "Z.K Villa için hazırladığımız tasarım. Taş ve ahşap kaplamalı, tek katlı bir villa ile terası, girişi ve iç mekânları birlikte kurgulandı."
+        ],
+        gallery: [
+          genis("zk-villa-01"),
+          yatay("zk-villa-02"),
+          yatay("zk-villa-03"),
+          genis("zk-villa-04"),
+          yatay("zk-villa-05"),
+          yatay("zk-villa-06"),
+          genis("zk-villa-07"),
+          yatay("zk-villa-08"),
+          yatay("zk-villa-09"),
+          genis("zk-villa-10"),
+          yatay("zk-villa-11"),
+          dikey("zk-villa-12")
+        ]
+      },
+      {
         slug: "world-of-bakery",
         title: "World of Bakery",
         tagline: "Serdivan'da klasik çizgili vitrini ve iç mekânıyla bir pastane.",
@@ -1833,7 +3598,7 @@
         location: "Sapanca / Sakarya",
         year: 2020,
         area: "",
-        category: "Bungalov",
+        category: "Villa",
         status: "Tasarım",
         client: "Özel",
         durum: "",
@@ -1876,30 +3641,6 @@
         ]
       },
       {
-        slug: "zk-bungalov",
-        title: "Z.K Bungalov",
-        tagline: "Sapanca'da ağaçların arasında üçgen çatılı bungalov tasarımı.",
-        location: "Sapanca / Sakarya",
-        year: 2020,
-        area: "",
-        category: "Bungalov",
-        status: "Tasarım",
-        client: "Özel",
-        durum: "",
-        featured: false,
-        showcase: false,
-        cover: g("zk-bungalov-01"),
-        text: [
-          "Sapanca'da bir arsa için tasarladığımız üçgen çatılı bungalov. Koyu çatı kaplaması ve ahşap cephe, ağaçlık arazide yapıyı geri planda tutuyor.",
-          "Bungalov tasarımlarını arsaya özel hazırlıyor, uygulamasını da üstleniyoruz."
-        ],
-        gallery: [
-          genis("zk-bungalov-02"),
-          yatay("zk-bungalov-03"),
-          yatay("zk-bungalov-01")
-        ]
-      },
-      {
         slug: "yaylalilar",
         title: "Yaylalılar",
         tagline: "Erenler'de ahşap ve koyu yüzeyli konut bloğu tasarımı.",
@@ -1912,14 +3653,30 @@
         durum: "",
         featured: false,
         showcase: false,
-        cover: g("yaylalilar-01"),
+        cover: g("yaylalilar-b-01"),
         text: [
           "Erenler'de bir konut bloğu için hazırladığımız cephe ve kütle tasarımı.",
-          "Derin balkonlar, ahşap görünümlü kaplama ve koyu çerçevelerle yatay bir cephe düzeni kuruldu."
+          "Derin balkonlar, ahşap görünümlü kaplama ve koyu çerçevelerle yatay bir cephe düzeni kuruldu.",
+          "Galeride sitenin girişi, bloklar arasındaki yollar ve gece görselleri yer alıyor."
         ],
         gallery: [
           yatay("yaylalilar-02"),
-          yatay("yaylalilar-01")
+          yatay("yaylalilar-01"),
+          genis("yaylalilar-b-01"),
+          yatay("yaylalilar-b-02"),
+          yatay("yaylalilar-b-03"),
+          genis("yaylalilar-b-04"),
+          yatay("yaylalilar-b-05"),
+          yatay("yaylalilar-b-06"),
+          genis("yaylalilar-b-07"),
+          yatay("yaylalilar-b-08"),
+          yatay("yaylalilar-b-09"),
+          genis("yaylalilar-b-10"),
+          yatay("yaylalilar-b-11"),
+          yatay("yaylalilar-b-12"),
+          genis("yaylalilar-b-13"),
+          yatay("yaylalilar-b-14"),
+          yatay("yaylalilar-b-15")
         ]
       },
       {
@@ -1935,21 +3692,25 @@
         durum: "",
         featured: false,
         showcase: false,
-        cover: g("sakmar-01"),
+        cover: g("sakmar-b-01"),
         text: [
           "Sakmar için hazırladığımız ticari yapı tasarımı.",
           "Üst katları saran desenli koyu cephe yapıya tek parça bir görünüm veriyor; zemin kat ise yola tümüyle açılıyor."
         ],
         gallery: [
           yatay("sakmar-02"),
-          yatay("sakmar-01")
+          yatay("sakmar-01"),
+          genis("sakmar-b-01"),
+          yatay("sakmar-b-02"),
+          yatay("sakmar-b-03"),
+          genis("sakmar-b-04")
         ]
       }
     ],
 
     /* ---------- HİZMETLER ---------- */
     services: [
-      { title: "Mimari Proje", short: "Arsanıza özel villa, konut ve bungalov.", text: "Arsanıza ve ihtiyacınıza göre mimari proje hazırlıyoruz: villa, konut, site, bungalov ve ticari yapılar. Proje çizimi, cephe tasarımı ve proje takibini aynı ekip yürütür." },
+      { title: "Mimari Proje", short: "Arsanıza özel villa, konut ve ticari yapı.", text: "Arsanıza ve ihtiyacınıza göre mimari proje hazırlıyoruz: villa, konut, site ve ticari yapılar. Proje çizimi, cephe tasarımı ve proje takibini aynı ekip yürütür." },
       { title: "3 Boyutlu Görselleştirme", short: "Yapıyı inşaattan önce görün.", text: "Cepheyi, malzemeyi, bahçeyi ve havuzu üç boyutlu görsellerle önceden görürsünüz. Kararlar şantiyede değil, tasarım masasında verilir." },
       { title: "İnşaat ve Taahhüt", short: "Temelden anahtar teslimine.", text: "Çizdiğimiz yapıyı kendi ekibimizle inşa ediyoruz. Temel, kaba inşaat, yalıtım, şap ve ince işlerin her aşamasını paylaşır, işi anahtar teslim tamamlarız." },
       { title: "İç Mekân Tasarım ve Uygulama", short: "Konut, otel, mağaza ve ofis.", text: "İç mekânı tasarlar ve yerinde uygularız: mutfak, banyo, asma tavan ve gizli ışık, seramik, boya ve dekorasyon." },
@@ -1962,22 +3723,34 @@
     news: [
       { tag: "Şantiyeden", date: "Ekim 2026",  title: "ConcepT 15'te bahçe ve yürüyüş yolları tamam",            image: g("yerleske-03"),        link: "proje.html?id=concept-15" },
       { tag: "Şantiyeden", date: "Ekim 2026",  title: "ConcepT 12 Neviye'de çatı kaplaması sürüyor; 2+1 daireler satışta", image: g("neviye-k1"), link: "proje.html?id=concept-12-neviye" },
-      { tag: "Villa",      date: "Şubat 2026", title: "S.A Villa'da cephe ve havuz tamamlandı",                   image: g("sa-villa-02"),        link: "proje.html?id=sa-villa" },
-      { tag: "Teslim",     date: "Eylül 2025", title: "ConcepT 12'de 3+1 daireler hemen teslim",                  image: g("concept-12-teslim-01"), link: "proje.html?id=concept-12" }
+      { tag: "Villa",      date: "Şubat 2026", title: "Karaman Villa'da cephe ve havuz tamamlandı",                   image: g("sa-villa-02"),        link: "proje.html?id=sa-villa" },
+      { tag: "Teslim",     date: "Eylül 2025", title: "ConcepT 12 Bozacı'da 3+1 daireler hemen teslim",                  image: g("concept-12-teslim-01"), link: "proje.html?id=concept-12" }
     ],
 
     /* ---------- HAKKIMIZDA SAYFASI ---------- */
     studio: {
       headline: "Mimari projeyi, inşaatı ve iç mekânı tek elden yürüten bir mimarlık ve inşaat firmasıyız.",
-      image: g("ofis-02"),
+      image: g("ofis-b-01"),
       text: [
         "Concept Mimarlık İnşaat, Mimar Muhammet Sefa Topçu'nun yürüttüğü, Sakarya Serdivan merkezli bir mimarlık ve inşaat firmasıdır. “Kalem ucunda sanat” sözüyle çalışırız: yapıyı önce çizer, sonra kendi ekibimizle inşa ederiz.",
-        "Sapanca, Serdivan, Akyazı, Arifiye, Erenler ve Kocaeli'de villalar, bungalovlar, konut siteleri, mağazalar ve otel iç mekânları tasarladık ve uyguladık. ConcepT 12 ve ConcepT 15 gibi kendi konut projelerimizi de aynı özenle üretiyoruz.",
+        "Sapanca, Serdivan, Akyazı, Arifiye, Erenler ve Kocaeli'de villalar, konut siteleri, iş merkezleri, mağazalar ve otel iç mekânları tasarladık ve uyguladık. ConcepT 12 ve ConcepT 15 gibi kendi konut projelerimizi de aynı özenle üretiyoruz.",
         "Şantiyede ne yapıldığını saklamayız. Temel demirinden cephe kaplamasına kadar her aşamayı fotoğraf ve videoyla paylaşırız; işveren, evinin hangi gün hangi aşamada olduğunu bilir."
+      ],
+      // Ofisten fotoğraflar (Sefa Bey, 22–23 Eki 2026); sayfada metnin altında galeri olarak görünür.
+      gallery: [
+        genis("ofis-b-02"),
+        yatay("ofis-b-03"),
+        dikey("ofis-b-04"),
+        yatay("ofis-b-05"),
+        dikey("ofis-b-06"),
+        dikey("ofis-b-07"),
+        dikey("ofis-b-08"),
+        dikey("ofis-b-09"),
+        dikey("ofis-b-10")
       ],
       stats: [
         { value: "2017", label: "İlk projeler" },
-        { value: "90+",  label: "Paylaşılan proje ve uygulama" },
+        { value: "120+", label: "Proje ve uygulama" },
         { value: "3",    label: "ConcepT konut projesi" },
         { value: "31 B", label: "Instagram takipçisi" }
       ]

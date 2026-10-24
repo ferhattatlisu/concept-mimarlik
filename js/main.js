@@ -29,6 +29,9 @@
   S.contact = S.contact || {};
   S.studio = S.studio || {};
   var BRAND = ((S.brand.name || "") + " " + (S.brand.suffix || "")).trim();
+  // Logodaki işaret (data.js -> brand.mark); rengi yazıyla aynıdır, açık/koyu bölümde kendiliğinden değişir
+  var MARK = S.brand.mark ? '<svg class="logo-mark" viewBox="0 0 148.28 148.12" aria-hidden="true" focusable="false">' +
+    '<path fill="currentColor" d="' + S.brand.mark + '"/></svg>' : "";
 
   // Bölüm başlıkları: data.js içindeki "labels" bölümünden gelir; orada olmayanlar için bunlar kullanılır
   var L = Object.assign({
@@ -203,7 +206,7 @@
     return '' +
       '<header class="hdr" data-theme="dark">' +
         '<a class="logo" href="index.html" aria-label="' + esc(BRAND) + ' — ana sayfa">' +
-          '<span class="logo-a">' + esc(S.brand.name) + '</span>' +
+          '<span class="logo-a">' + MARK + esc(S.brand.name) + '</span>' +
           (S.brand.suffix ? '<span class="logo-b">' + esc(S.brand.suffix) + "</span>" : "") +
         "</a>" +
         '<nav class="pills" aria-label="Ana menü">' + links + "</nav>" +
@@ -575,7 +578,7 @@
             if (o.video) {
               return '<span class="media is-video ' + cls + '"><video src="' + esc(o.video) + '"' +
                 (o.poster ? ' poster="' + esc(o.poster) + '"' : "") +
-                ' controls muted playsinline preload="none" aria-label="' + esc(p.title) + ' — video"></video></span>';
+                ' controls controlslist="nodownload" disablepictureinpicture muted playsinline preload="none" aria-label="' + esc(p.title) + ' — video"></video></span>';
             }
             return media(o.src, p.title + " — görsel " + (i + 1), wide ? 2000 : 1200, cls);
           }).join("") +
@@ -609,6 +612,14 @@
             }).join("") + "</div>") +
           "</div>" +
         "</div>" +
+        // Ofisten fotoğraflar (data.js -> studio.gallery); proje galerisiyle aynı düzen
+        (!(st.gallery || []).length ? "" :
+          '<div class="sec-head rv"><h2 class="label">' + esc(L.offices) + '</h2><span class="label mute">' + pad2(st.gallery.length) + "</span></div>" +
+          '<div class="pgal">' + st.gallery.map(function (g, i) {
+            var o = typeof g === "string" ? { src: g } : (g || {});
+            var cls = "rv" + (o.wide ? " is-wide" : "") + (o.land ? " is-land" : "");
+            return media(o.src, BRAND + " ofisi — görsel " + (i + 1), o.wide ? 2000 : 1200, cls);
+          }).join("") + "</div>") +
       "</section>" +
       servicesHTML(true, "t-light") +
       (!S.team.length ? "" :
@@ -1014,7 +1025,7 @@
     pageEl.insertAdjacentHTML("beforebegin", headerHTML());
     pageEl.insertAdjacentHTML("beforeend", footerHTML(PAGE === "studio"));
     var pl = $(".preloader-mark .logo-a");
-    if (pl) pl.textContent = S.brand.name;
+    if (pl) pl.innerHTML = MARK + esc(S.brand.name);
     var md = $('meta[name="description"]');
     if (md) md.setAttribute("content", S.brand.description || "");
 
