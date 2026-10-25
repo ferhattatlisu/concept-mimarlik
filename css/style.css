@@ -1222,3 +1222,16 @@ html.has-cursor [data-cursor], html.has-cursor [data-cursor] * { cursor: none; }
 .logo-mark { display: inline-block; width: .9em; height: .9em; margin-right: .2em; vertical-align: -.1em; }
 /* Görseller sürüklenip kaydedilmesin, telefonda uzun basınca "kaydet" menüsü çıkmasın (js/koruma.js ile birlikte) */
 img, video { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+
+/* ---- SEO eklemeleri (25 Eki 2026) ---- */
+/* Ekranda görünmeyen, arama motorları ve ekran okuyucular için yazı (ana sayfanın ana başlığı) */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* Projeler, tür ve bölge sayfalarında başlığın altındaki tek satırlık açıklama */
+.phead-desc { max-width: 46em; margin-top: clamp(16px, 2vw, 30px); color: var(--mute); font-size: clamp(.95rem, 1.15vw, 1.15rem); line-height: 1.5; }
+/* Alt bilgide "Bölgeler" sütunu */
+.ftr-cols { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr) minmax(0, .7fr) minmax(0, .7fr) minmax(0, .7fr); }
+@media (max-width: 1100px) { .ftr-cols { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .ftr-cols { grid-template-columns: 1fr; } }
+/* JavaScript kapalıysa (ya da sayfayı JavaScript çalıştırmadan okuyan arama motorlarında) hazır HTML içerik görünür kalsın */
+html:not(.js) .rv { opacity: 1; translate: none; }
+html:not(.js) .mkw .mk > span { translate: none; }

@@ -23,22 +23,28 @@
       yazın (uzantısız; dosya .jpg olmalı). Önerilen: geniş kenar
       1600–2400 px.
    3) Proje eklemek: "projects" listesindeki bir bloğu { ... }, kopyalayıp
-      yapıştırın. "slug" adresi belirler (proje.html?id=slug): küçük harf,
-      boşluksuz, Türkçe karaktersiz ve her projede farklı olmalı.
+      yapıştırın. "slug" adresi belirler (/projeler/slug/): küçük harf,
+      boşluksuz, Türkçe karaktersiz ve her projede farklı olmalı. Yayımlanmış
+      bir projenin slug'ı değişirse eskisini aşağıdaki "eskiAdresler"e ekleyin.
    4) Galeri düzeni: düz g("...") yazarsanız 1 geniş + 2 yan yana sırası
       uygulanır. Elle seçmek için:
           genis("ad")   tam genişlik (yatay fotoğraf)
           yatay("ad")   yarım genişlik, yatay
           dikey("ad")   yarım genişlik, dikey
-          { video: "images/ad.mp4", poster: g("ad") }   video
+          { video: "/images/ad.mp4", poster: g("ad") }   video
    5) Altı çizili kelime: manifesto cümlesinde [köşeli parantez] içine
       aldığınız kelimelerin altı çizilir.
    6) Bir bölümü kaldırmak: listesini boş bırakın (ör. news: [],).
+   7) HER DEĞİŞİKLİKTEN SONRA (25 Eki 2026'dan beri): sayfalar arama
+      motorları için hazır HTML olarak üretilir. concept-mimarlik klasöründe
+          python araclar/gorsel.py     (yeni fotoğraf eklendiyse)
+          node araclar/uret.js         (her zaman)
+      çalıştırın. Ayrıntı: notlar/SEO-PLANI.md.
    ===================================================================== */
 
 (function () {
   // images klasöründeki bir .jpg dosyasının yolunu üretir.
-  function g(ad) { return "images/" + ad + ".jpg"; }
+  function g(ad) { return "/images/" + ad + ".jpg"; }
   function dikey(ad) { return { src: g(ad), wide: false }; }
   function yatay(ad) { return { src: g(ad), land: true }; }
   function genis(ad) { return { src: g(ad), wide: true }; }
@@ -56,12 +62,33 @@
 
     /* ---------- ÜST MENÜ ---------- */
     nav: [
-      { label: "Projeler",   href: "projeler.html" },
-      { label: "Tamamlanan", href: "projeler.html?sekme=tamamlanan" },
-      { label: "Devam Eden", href: "projeler.html?sekme=devam-eden" },
-      { label: "Hakkımızda", href: "studyo.html" },
-      { label: "İletişim",   href: "studyo.html#iletisim" }
+      { label: "Projeler",   href: "/projeler/" },
+      { label: "Tamamlanan", href: "/projeler/tamamlanan/" },
+      { label: "Devam Eden", href: "/projeler/devam-eden/" },
+      { label: "Hakkımızda", href: "/hakkimizda/" },
+      { label: "İletişim",   href: "/hakkimizda/#iletisim" }
     ],
+
+    /* ---------- ARAMA MOTORLARI (SEO) ----------
+       Ana sayfanın Google'da görünen başlığı ve açıklaması. Diğer sayfalarınki proje adı, tür ve yerden kendiliğinden
+       üretilir (js/main.js -> projectTitle, info). h1: ana sayfanın ekranda görünmeyen ana başlığı.
+    */
+    seo: {
+      homeTitle: "Concept Mimarlık İnşaat | Sakarya Serdivan Mimarlık ve İnşaat",
+      homeDescription: "Serdivan, Sakarya'da mimari proje, 3B görselleştirme, inşaat ve iç mekân uygulaması. Sapanca, Arifiye ve Kocaeli'de 120'yi aşkın villa, konut ve ticari proje.",
+      aboutDescription: "Mimar Muhammet Sefa Topçu'nun yürüttüğü, Serdivan merkezli mimarlık ve inşaat firması. Hizmetlerimiz, ofisimiz ve iletişim: Köprübaşı Mah. Aralık Cad. No: 27/B.",
+      h1: "Concept Mimarlık İnşaat — Sakarya Serdivan'da mimari proje, inşaat ve iç mekân uygulaması",
+      suffix: "Concept Mimarlık",
+      projectsTitle: "Projelerimiz — Villa, Konut ve Ticari Yapılar"
+    },
+
+    // Değişen proje adresleri (eski slug -> yeni slug); eski bağlantılar yeni sayfaya yönlenir
+    eskiAdresler: {
+      "k-halid-villa": "kirkpinar-villa",
+      "concept-12": "concept-12-bozaci",
+      "sa-villa": "karaman-villa",
+      "yazlik-konutlari": "yazlik-villa"
+    },
 
     /* ---------- PROJELER SAYFASI SEKMELERİ ----------
        Firmanın isteği (19 Eki 2026): "Projeler / Tamamlanan projeler / Devam eden projeler" diye 3 sekme.
@@ -114,7 +141,7 @@
         title: "Önce ekranda görürsünüz.",
         text: "Her işe mimari proje ve üç boyutlu görselle başlarız. Cepheyi, malzemeyi, bahçeyi ve havuzu inşaat başlamadan önce birlikte görür, kararı birlikte veririz.",
         linkLabel: "Projeleri inceleyin",
-        linkHref: "projeler.html",
+        linkHref: "/projeler/",
         images: [
           g("galium-01"),
           g("alacati-01"),
@@ -126,7 +153,7 @@
         title: "Çizdiğimizi kendimiz yaparız.",
         text: "Temel demirinden cephe kaplamasına kadar şantiyeyi kendi ekibimiz yürütür. Hangi betonun döküldüğünü, hangi katın çıkıldığını adım adım paylaşırız; iş, yapı denetim ve laboratuvar kontrolleriyle ilerler.",
         linkLabel: "Bizi tanıyın",
-        linkHref: "studyo.html",
+        linkHref: "/hakkimizda/",
         images: [
           g("kirkpinar-14"),
           g("ma-villa-y-03"),
@@ -142,7 +169,7 @@
     */
     projects: [
       {
-        slug: "k-halid-villa",
+        slug: "kirkpinar-villa",
         title: "Kırkpınar Villa",
         tagline: "Sapanca Kırkpınar'da projesini çizip temelinden havuzuna kadar inşa ettiğimiz modern villa.",
         location: "Kırkpınar, Sapanca / Sakarya",
@@ -201,13 +228,13 @@
         gallery: [
           dikey("yerleske-02"),
           dikey("yerleske-03"),
-          { video: "images/concept-15-v2.mp4", poster: g("concept-15-v2") },
+          { video: "/images/concept-15-v2.mp4", poster: g("concept-15-v2") },
           dikey("concept-15-k1"),
           dikey("concept-15-k2"),
           dikey("yerleske-04"),
           dikey("yerleske-05"),
-          { video: "images/yerleske-tur.mp4", poster: g("yerleske-tur") },
-          { video: "images/concept-15-v1.mp4", poster: g("concept-15-v1") },
+          { video: "/images/yerleske-tur.mp4", poster: g("yerleske-tur") },
+          { video: "/images/concept-15-v1.mp4", poster: g("concept-15-v1") },
           dikey("yerleske-01"),
           dikey("concept-15-b-01"),
           dikey("concept-15-b-02"),
@@ -229,7 +256,7 @@
         ]
       },
       {
-        slug: "concept-12",
+        slug: "concept-12-bozaci",
         title: "ConcepT 12 Bozacı",
         tagline: "Arifiye Fatih Mahallesi'nde tasarımını ve inşaatını üstlendiğimiz, 3+1 dairelerden oluşan 12 dairelik konut.",
         location: "Fatih Mah., Arifiye / Sakarya",
@@ -273,7 +300,7 @@
         ]
       },
       {
-        slug: "sa-villa",
+        slug: "karaman-villa",
         title: "Karaman Villa",
         tagline: "Karaman'da temelinden havuzuna kadar tüm yapımını üstlendiğimiz villa.",
         location: "Karaman, Sakarya",
@@ -514,7 +541,7 @@
           yatay("neviye-y-05"),
           yatay("neviye-y-06"),
           genis("neviye-y-07"),
-          { video: "images/neviye-v1.mp4", poster: g("neviye-v1") },
+          { video: "/images/neviye-v1.mp4", poster: g("neviye-v1") },
           dikey("neviye-k1"),
           dikey("neviye-k2"),
           dikey("neviye-03"),
@@ -797,7 +824,7 @@
         ]
       },
       {
-        slug: "yazlik-konutlari",
+        slug: "yazlik-villa",
         title: "Yazlık Villa",
         tagline: "Serdivan Yazlık'ta taş kaplamalı cephesi ve özenli iç mekânlarıyla tamamladığımız villa.",
         location: "Yazlık, Serdivan / Sakarya",
@@ -829,13 +856,13 @@
           dikey("yazlik-villa-11"),
           dikey("yazlik-villa-12"),
           dikey("yazlik-villa-13"),
-          { video: "images/yazlik-v1.mp4", poster: g("yazlik-v1") },
+          { video: "/images/yazlik-v1.mp4", poster: g("yazlik-v1") },
           dikey("yazlik-k1"),
           dikey("yazlik-k2"),
           dikey("yazlik-k6"),
           dikey("yazlik-k3"),
           dikey("yazlik-k5"),
-          { video: "images/yazlik-v2.mp4", poster: g("yazlik-v2") },
+          { video: "/images/yazlik-v2.mp4", poster: g("yazlik-v2") },
           dikey("yazlik-k4")
         ]
       },
@@ -3721,10 +3748,10 @@
     /* ---------- GÜNCEL ---------- */
     // link boş ("") bırakılırsa kart tıklanamaz olur.
     news: [
-      { tag: "Şantiyeden", date: "Ekim 2026",  title: "ConcepT 15'te bahçe ve yürüyüş yolları tamam",            image: g("yerleske-03"),        link: "proje.html?id=concept-15" },
-      { tag: "Şantiyeden", date: "Ekim 2026",  title: "ConcepT 12 Neviye'de çatı kaplaması sürüyor; 2+1 daireler satışta", image: g("neviye-k1"), link: "proje.html?id=concept-12-neviye" },
-      { tag: "Villa",      date: "Şubat 2026", title: "Karaman Villa'da cephe ve havuz tamamlandı",                   image: g("sa-villa-02"),        link: "proje.html?id=sa-villa" },
-      { tag: "Teslim",     date: "Eylül 2025", title: "ConcepT 12 Bozacı'da 3+1 daireler hemen teslim",                  image: g("concept-12-teslim-01"), link: "proje.html?id=concept-12" }
+      { tag: "Şantiyeden", date: "Ekim 2026",  title: "ConcepT 15'te bahçe ve yürüyüş yolları tamam",            image: g("yerleske-03"),        link: "/projeler/concept-15/" },
+      { tag: "Şantiyeden", date: "Ekim 2026",  title: "ConcepT 12 Neviye'de çatı kaplaması sürüyor; 2+1 daireler satışta", image: g("neviye-k1"), link: "/projeler/concept-12-neviye/" },
+      { tag: "Villa",      date: "Şubat 2026", title: "Karaman Villa'da cephe ve havuz tamamlandı",                   image: g("sa-villa-02"),        link: "/projeler/karaman-villa/" },
+      { tag: "Teslim",     date: "Eylül 2025", title: "ConcepT 12 Bozacı'da 3+1 daireler hemen teslim",                  image: g("concept-12-teslim-01"), link: "/projeler/concept-12-bozaci/" }
     ],
 
     /* ---------- HAKKIMIZDA SAYFASI ---------- */

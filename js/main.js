@@ -74,14 +74,133 @@
     if (!url || !w || url.indexOf("images.unsplash.com") === -1) return url;
     return url.replace(/([?&])w=\d+/, "$1w=" + w);
   }
+  // Sitede jpg asıllar değil, araclar/gorsel.py'nin ürettiği WebP sürümler gösterilir:
+  //   /images/ad.jpg -> /images/k/ad-480.webp, -960.webp, -1600.webp
+  // data.js'te "images/..." diye göreli yazılmış yol klasörlü adreslerde de çalışsın
+  function kok(u) { return /^images\//.test(u || "") ? "/" + u : u; }
+  function webp(url, w) {
+    var m = /^\/?images\/([^\/]+)\.jpg$/.exec(url || "");
+    return m ? "/images/k/" + m[1] + "-" + w + ".webp" : url;
+  }
+  function srcsetOf(url) {
+    return webp(url, 480) === url ? "" : [480, 960, 1600].map(function (w) { return webp(url, w) + " " + w + "w"; }).join(", ");
+  }
+  // Görselin sayfada kapladığı genişlik (w = istenen piksel genişliği, eski Unsplash ayarı)
+  function sizesOf(w) {
+    return w >= 2000 ? "100vw" : w >= 1400 ? "(max-width: 900px) 100vw, 70vw" : w >= 1200 ? "(max-width: 900px) 100vw, 50vw" :
+      w >= 800 ? "(max-width: 900px) 100vw, 34vw" : "160px";
+  }
+  // <img> öznitelikleri; "ertele" true ise src/srcset data- ile yazılır, loadDeferred sonradan yükler
+  function imgAttrs(url, w, ertele) {
+    var set = srcsetOf(url), p = ertele ? "data-" : "";
+    return p + 'src="' + esc(set ? webp(url, 960) : kok(sized(url, w))) + '"' +
+      (set ? " " + p + 'srcset="' + esc(set) + '" sizes="' + sizesOf(w) + '"' : "");
+  }
   function media(url, alt, w, cls, eager) {
     var c = "media" + (cls ? " " + cls : "");
     if (!url) return '<span class="' + c + ' is-empty" data-ph="' + esc(alt || "") + '"></span>';
     return '<span class="' + c + '" data-ph="Görsel">' +
-      '<img src="' + esc(sized(url, w)) + '" alt="' + esc(alt || "") + '"' +
+      "<img " + imgAttrs(url, w) + ' alt="' + esc(alt || "") + '"' +
       (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async"></span>';
   }
-  function projectUrl(p) { return "proje.html?id=" + encodeURIComponent(p.slug); }
+
+  /* ------------------------------------------------------------------
+     Adresler (25 Eki 2026, SEO). Her sayfa kendi klasöründe hazır HTML olarak
+     üretilir (araclar/uret.js):  /projeler/<slug>/  proje,  /projeler/tamamlanan/
+     sekme,  /projeler/villa/  tür,  /projeler/sapanca/  bölge,  /hakkimizda/.
+     ------------------------------------------------------------------ */
+  function slugify(s) {
+    return String(s || "").toLocaleLowerCase("tr")
+      .replace(/ç/g, "c").replace(/ğ/g, "g").replace(/ı/g, "i").replace(/ö/g, "o").replace(/ş/g, "s").replace(/ü/g, "u")
+      .replace(/[âà]/g, "a").replace(/[îì]/g, "i").replace(/[ûù]/g, "u")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+  function projectUrl(p) { return "/projeler/" + p.slug + "/"; }
+  function tabUrl(t) { return t && t.durum ? "/projeler/" + t.id + "/" : "/projeler/"; }
+  // Projenin ilçesi: "Kırkpınar, Sapanca / Sakarya" -> "Sapanca"; ilçe yoksa Sakarya dışındaki il ("Bahçecik, Kocaeli" -> "Kocaeli")
+  function regionOf(p) {
+    var loc = String(p.location || "");
+    if (loc.indexOf(" / ") !== -1) { var a = loc.split(" / ")[0].split(","); return a[a.length - 1].trim(); }
+    var last = loc.split(",").pop().trim();
+    return /^(Kocaeli|Balıkesir|İstanbul)$/.test(last) ? last : "";
+  }
+  // Başlıkta kullanılan yer: ilçe, yoksa il
+  function placeOf(p) { return regionOf(p) || (/Sakarya/.test(p.location || "") ? "Sakarya" : ""); }
+  function countBy(fn) {
+    var o = {};
+    S.projects.forEach(function (p) { var k = fn(p); if (k) o[k] = (o[k] || 0) + 1; });
+    return o;
+  }
+  var CAT_N = countBy(function (p) { return p.category; });
+  var REG_N = countBy(regionOf);
+  // En az 3 projesi olan türün, en az 4 projesi olan bölgenin kendi sayfası var
+  function catUrl(c) { return CAT_N[c] >= 3 ? "/projeler/" + slugify(c) + "/" : ""; }
+  function regionUrl(r) { return REG_N[r] >= 4 ? "/projeler/" + slugify(r) + "/" : ""; }
+  function regionsByCount() {
+    return Object.keys(REG_N).filter(regionUrl).sort(function (a, b) { return REG_N[b] - REG_N[a]; });
+  }
+  // Eski adresler (proje.html?id=..., projeler.html, studyo.html) -> yeni adres
+  function newUrl(href) {
+    var m = /^(?:\.?\/)?(index|proje|projeler|studyo)\.html(\?[^#]*)?(#.*)?$/.exec(href || "");
+    if (!m) return href;
+    var q = {}, hash = m[3] || "";
+    try { new URLSearchParams(m[2] || "").forEach(function (v, k) { q[k] = v; }); } catch (e) {}
+    if (m[1] === "index") return "/" + hash;
+    if (m[1] === "studyo") return "/hakkimizda/" + hash;
+    if (m[1] === "proje") {
+      var id = (S.eskiAdresler || {})[q.id] || q.id, p = S.projects.filter(function (x) { return x.slug === id; })[0];
+      return p ? projectUrl(p) : "/projeler/";
+    }
+    if (q.kategori && catUrl(q.kategori)) return catUrl(q.kategori);
+    return tabUrl(S.projectTabs.filter(function (t) { return t.id === q.sekme; })[0]) + hash;
+  }
+
+  /* ------------------------------------------------------------------
+     Arama motorları için sayfa başlığı ve açıklaması
+     ------------------------------------------------------------------ */
+  var SEO = S.seo || {};
+  var SUFFIX = " | " + (SEO.suffix || "Concept Mimarlık");
+  var CAT_WORD = { "Ticari": "Ticari Yapı", "Kamu": "Kamu Yapısı" };
+  var CAT_PLURAL = { "Ticari": "Ticari Projeler" };
+  function catWord(c) { return CAT_WORD[c] || c || ""; }
+  function catPlural(c) { return CAT_PLURAL[c] || c + " Projeleri"; }
+  // "Sapanca" -> "Sapanca'da", "Arifiye" -> "Arifiye'de" (ünlü uyumu)
+  function ekDa(w) {
+    var v = (String(w).toLocaleLowerCase("tr").match(/[aeıioöuüâ]/g) || ["a"]).pop();
+    var sert = /[fstkçşhp]$/.test(String(w).toLocaleLowerCase("tr"));
+    return w + "'" + (sert ? "t" : "d") + (/[aıouâ]/.test(v) ? "a" : "e");
+  }
+  function joinTr(list) { return list.length < 2 ? list.join("") : list.slice(0, -1).join(", ") + " ve " + list[list.length - 1]; }
+  // Açıklamayı ~160 harfte, kelime ortasında bölmeden keser
+  function clip(s, n) {
+    s = String(s || "").replace(/\s+/g, " ").trim();
+    n = n || 160;
+    if (s.length <= n) return s;
+    s = s.slice(0, n - 1);
+    return s.slice(0, s.lastIndexOf(" ")).replace(/[,;:\s—-]+$/, "") + "…";
+  }
+  function firstSentence(s) { var m = /^(.+?[.!?])(\s|$)/.exec(String(s || "")); return m ? m[1] : String(s || ""); }
+  function namesOf(list, n) {
+    var names = list.slice(0, n).map(function (p) { return p.title; });
+    return list.length > n ? names.join(", ") + " ve diğerleri" : joinTr(names);
+  }
+  function setMeta(title, desc) {
+    doc.title = title;
+    var md = $('meta[name="description"]');
+    if (md && desc) md.setAttribute("content", desc);
+  }
+  function projectTitle(p) {
+    var place = placeOf(p);
+    return p.title + " — " + (place ? place + " " : "") + catWord(p.category) + " Projesi" + SUFFIX;
+  }
+  function projectDesc(p) {
+    var t = String(p.tagline || "").trim();
+    if (t && !/[.!?…]$/.test(t)) t += ".";
+    var state = p.status || stateOf(p);
+    var d = [t, p.location ? p.location.replace(" / ", ", ") + "." : "", state && state !== "Tasarım" ? state + "." : ""].filter(Boolean).join(" ");
+    // Firma adı yalnızca sığarsa eklenir
+    return d.length + 32 <= 160 ? d + " Concept Mimarlık İnşaat, Serdivan." : clip(d);
+  }
   // "Yer · Yıl" satırı; yeri henüz bilinmeyen projede yalnızca yıl görünür.
   function placeYear(p) { return esc([p.location, p.year].filter(Boolean).join(" · ")); }
   function initials(name) {
@@ -113,8 +232,9 @@
   // Açılışı yavaşlatmamak için bekletilen görselleri (data-src) yükler
   function loadDeferred(root) {
     $$("img[data-src]", root).forEach(function (im) {
-      var src = im.getAttribute("data-src");
+      var src = im.getAttribute("data-src"), set = im.getAttribute("data-srcset");
       im.removeAttribute("data-src");
+      if (set) { im.removeAttribute("data-srcset"); im.srcset = set; }
       im.src = src;
     });
   }
@@ -178,34 +298,29 @@
   /* ------------------------------------------------------------------
      Ortak bölümler
      ------------------------------------------------------------------ */
-  // Projeler sayfasındaki sekme (?sekme=tamamlanan); yoksa ilk sekme
+  // Projeler sayfasındaki sekme: sayfanın kendi bilgisi (data-sekme) ya da eski ?sekme=; yoksa ilk sekme
   function tabOf(search) {
-    var t = "";
-    try { t = new URLSearchParams(search || "").get("sekme") || ""; } catch (e) {}
+    var t = body.getAttribute("data-sekme") || "";
+    try { t = new URLSearchParams(search || "").get("sekme") || t; } catch (e) {}
     return t || (S.projectTabs[0] ? S.projectTabs[0].id : "");
   }
+  // Üst menüde seçili görünen adres; proje, tür ve bölge sayfalarında "Projeler"
+  var CUR_PATH = { home: "/", studio: "/hakkimizda/" }[PAGE] || (PAGE === "notfound" ? "" : "/projeler/");
   function isCurrent(href) {
-    if (href.indexOf("#") !== -1) return false;
-    var here = fileOf(location.pathname);
-    var onProject = here === "proje";
-    if (onProject) here = "projeler";
-    if (fileOf(href) !== here) return false;
-    if (here !== "projeler") return true;
-    var q = href.indexOf("?") === -1 ? "" : href.slice(href.indexOf("?"));
-    return tabOf(q) === (onProject ? tabOf("") : tabOf(location.search));
+    return href.indexOf("#") === -1 && newUrl(href) === CUR_PATH;
   }
 
   function headerHTML() {
     var links = S.nav.map(function (n) {
-      return '<a class="pill' + (isCurrent(n.href) ? " is-current" : "") + '" href="' + esc(n.href) + '">' + esc(n.label) + "</a>";
+      return '<a class="pill' + (isCurrent(n.href) ? " is-current" : "") + '" href="' + esc(newUrl(n.href)) + '">' + esc(n.label) + "</a>";
     }).join("");
-    var big = [{ label: "Ana Sayfa", href: "index.html" }].concat(S.nav).map(function (n, i) {
-      return '<a href="' + esc(n.href) + '"><span class="mk" style="--i:' + i + '"><span>' + esc(n.label) + "</span></span></a>";
+    var big = [{ label: "Ana Sayfa", href: "/" }].concat(S.nav).map(function (n, i) {
+      return '<a href="' + esc(newUrl(n.href)) + '"><span class="mk" style="--i:' + i + '"><span>' + esc(n.label) + "</span></span></a>";
     }).join("");
     var o = S.offices[0];
     return '' +
       '<header class="hdr" data-theme="dark">' +
-        '<a class="logo" href="index.html" aria-label="' + esc(BRAND) + ' — ana sayfa">' +
+        '<a class="logo" href="/">' +
           '<span class="logo-a">' + MARK + esc(S.brand.name) + '</span>' +
           (S.brand.suffix ? '<span class="logo-b">' + esc(S.brand.suffix) + "</span>" : "") +
         "</a>" +
@@ -226,8 +341,12 @@
       return '<p class="ftr-office"><strong>' + esc(o.city) + "</strong><br>" + esc(o.address) +
         (o.phone ? '<br><a href="tel:' + esc(o.phone.replace(/\s/g, "")) + '">' + esc(o.phone) + "</a>" : "") + "</p>";
     }).join("");
-    var links = [{ label: "Ana Sayfa", href: "index.html" }].concat(S.nav).map(function (n) {
-      return '<li><a href="' + esc(n.href) + '">' + esc(n.label) + "</a></li>";
+    var links = [{ label: "Ana Sayfa", href: "/" }].concat(S.nav).map(function (n) {
+      return '<li><a href="' + esc(newUrl(n.href)) + '">' + esc(n.label) + "</a></li>";
+    }).join("");
+    // Bölge sayfaları (arama motorları için de iç bağlantı)
+    var regions = regionsByCount().map(function (r) {
+      return '<li><a href="' + regionUrl(r) + '">' + esc(r) + "</a></li>";
     }).join("");
     var social = (S.contact.social || []).map(function (s) {
       var ext = /^https?:/i.test(s.href);
@@ -242,9 +361,10 @@
           "</div>") +
         '<div class="ftr-cols">' +
           '<div class="ftr-col ftr-about"><p>' + esc(S.brand.description) + "</p></div>" +
-          (offices ? '<div class="ftr-col"><h3 class="label">' + esc(L.offices) + "</h3>" + offices + "</div>" : "") +
-          '<div class="ftr-col"><h3 class="label">Menü</h3><ul>' + links + "</ul></div>" +
-          (social ? '<div class="ftr-col"><h3 class="label">Takip</h3><ul>' + social + "</ul></div>" : "") +
+          (offices ? '<div class="ftr-col"><h2 class="label">' + esc(L.offices) + "</h2>" + offices + "</div>" : "") +
+          '<div class="ftr-col"><h2 class="label">Menü</h2><ul>' + links + "</ul></div>" +
+          (regions ? '<div class="ftr-col"><h2 class="label">Bölgeler</h2><ul>' + regions + "</ul></div>" : "") +
+          (social ? '<div class="ftr-col"><h2 class="label">Takip</h2><ul>' + social + "</ul></div>" : "") +
         "</div>" +
         '<div class="ftr-word" aria-hidden="true"><span>' + esc(S.brand.name) + "</span></div>" +
         '<div class="ftr-base">' +
@@ -276,7 +396,7 @@
         '<span class="svc-name">' + esc(s.title) + "</span>" +
         '<span class="svc-desc">' + esc(full ? s.text : s.short) + "</span>";
       if (full) return '<div class="svc-row is-full rv">' + inner + "</div>";
-      return '<a class="svc-row rv" href="studyo.html#hizmetler">' + inner +
+      return '<a class="svc-row rv" href="/hakkimizda/#hizmetler">' + inner +
         '<span class="svc-go">' + esc(L.more) + " <i>→</i></span></a>";
     }).join("");
     return '<section class="svc ' + theme + '" data-theme="light" id="hizmetler">' +
@@ -295,11 +415,11 @@
     var hasVideo = !!S.heroVideo;
     var bg = hasVideo
       ? '<video class="hero-video" autoplay muted loop playsinline preload="auto"' +
-          (slides[0] ? ' poster="' + esc(slides[0].image) + '"' : "") + ">" +
+          (slides[0] ? ' poster="' + esc(webp(slides[0].image, 1600)) + '"' : "") + ">" +
           '<source src="' + esc(S.heroVideo) + '"></video>'
       : slides.map(function (s, i) {
           return '<div class="media hero-slide" data-ph="">' +
-            '<img ' + (i === 0 ? 'fetchpriority="high" src' : "data-src") + '="' + esc(sized(s.image, 2000)) + '" alt="" decoding="async"></div>';
+            "<img " + (i === 0 ? 'fetchpriority="high" ' : "") + imgAttrs(s.image, 2000, i > 0) + ' alt="" decoding="async"></div>';
         }).join("");
     var heads = S.headlines.map(function (h) {
       return '<span class="hl" aria-hidden="true">' + h.map(function (line) {
@@ -317,7 +437,8 @@
       '<section class="hero" data-theme="dark">' +
         '<div class="hero-bg">' + bg + "</div>" +
         '<div class="hero-shade"></div>' +
-        '<h1 class="hero-title" aria-label="' + esc(BRAND + " — " + (S.headlines[0] || []).join(" ")) + '">' + heads + "</h1>" +
+        // Dönen başlıklar yalnızca görsel; arama motorları ve ekran okuyucular için başlık metni gizli yazıdadır
+        '<h1 class="hero-title"><span class="sr-only">' + esc(SEO.h1 || BRAND) + "</span>" + heads + "</h1>" +
         '<div class="hero-bar">' +
           '<div class="hero-cap"><p class="hero-cap-text">' + esc(caption) + "</p>" + dots + "</div>" +
           '<a class="hero-arrow" href="#manifesto" aria-label="Aşağı kaydır">' +
@@ -337,7 +458,7 @@
         '<p class="manifesto-text rv">' + rich(S.manifesto) + "</p>" +
         '<div class="manifesto-side"><div class="manifesto-note rv">' +
           "<p>" + esc(S.manifestoNote) + "</p>" +
-          '<a class="btn" href="studyo.html">' + esc(L.studio) + " <i>→</i></a>" +
+          '<a class="btn" href="/hakkimizda/">' + esc(L.studio) + " <i>→</i></a>" +
         "</div></div>" +
       "</section>";
 
@@ -353,11 +474,11 @@
           }).join("") +
           '<div class="feat-preview" aria-hidden="true">' +
             feat.map(function (p, i) {
-              return '<span class="media ' + shapes[i % 3] + '"><img data-src="' + esc(sized(p.cover, 800)) + '" alt="" decoding="async"></span>';
+              return '<span class="media ' + shapes[i % 3] + '"><img ' + imgAttrs(p.cover, 800, true) + ' alt="" decoding="async"></span>';
             }).join("") +
           "</div>" +
         "</div>" +
-        '<div class="feat-more rv"><a class="btn" href="projeler.html">' + esc(L.allProjects) + " <i>→</i></a></div>" +
+        '<div class="feat-more rv"><a class="btn" href="/projeler/">' + esc(L.allProjects) + " <i>→</i></a></div>" +
       "</section>";
 
     var showcase = !show.length ? "" :
@@ -367,14 +488,14 @@
         '<div class="show-grid">' +
           show.map(function (p) {
             return '<a class="card rv" href="' + projectUrl(p) + '" data-cursor="' + esc(L.view) + '">' +
-              '<span class="media" data-ph="Görsel"><img src="' + esc(sized(p.cover, 1400)) + '" alt="' + esc(p.title) + '" loading="lazy" decoding="async">' +
+              '<span class="media" data-ph="Görsel"><img ' + imgAttrs(p.cover, 1400) + ' alt="' + esc(p.title + (placeOf(p) ? ", " + placeOf(p) : "")) + '" loading="lazy" decoding="async">' +
                 '<span class="card-cta">' + esc(L.view) + " →</span></span>" +
               '<span class="card-meta"><span class="card-title">' + esc(p.title) + "</span>" +
               '<span class="card-sub">' + placeYear(p) + "</span></span>" +
             "</a>";
           }).join("") +
         "</div>" +
-        '<div class="show-more rv"><a class="btn" href="projeler.html">' + esc(L.allProjects) + " <i>→</i></a></div>" +
+        '<div class="show-more rv"><a class="btn" href="/projeler/">' + esc(L.allProjects) + " <i>→</i></a></div>" +
       "</section>";
 
     var split = !S.split.length ? "" :
@@ -386,7 +507,7 @@
               '<p class="label mute">' + esc(b.label) + "</p>" +
               '<h2 class="split-title">' + esc(b.title) + "</h2>" +
               '<p class="split-body">' + esc(b.text) + "</p>" +
-              (b.linkHref ? '<a class="btn" href="' + esc(b.linkHref) + '">' + esc(b.linkLabel || L.more) + " <i>→</i></a>" : "") +
+              (b.linkHref ? '<a class="btn" href="' + esc(newUrl(b.linkHref)) + '">' + esc(b.linkLabel || L.more) + " <i>→</i></a>" : "") +
               '<p class="split-count label">' + pad2(i + 1) + " / " + pad2(S.split.length) + "</p>" +
             "</div></div>" +
           "</div>";
@@ -402,13 +523,13 @@
               '<span class="news-meta label"><span>' + esc(n.tag) + "</span><span>" + esc(n.date) + "</span></span>" +
               '<span class="news-title">' + esc(n.title) + "</span>";
             var attrs = ' class="news-card rv rv-blur" style="--d:' + (i * 0.08) + 's"';
-            return n.link ? "<a" + attrs + ' href="' + esc(n.link) + '">' + inner + "</a>" : "<div" + attrs + ">" + inner + "</div>";
+            return n.link ? "<a" + attrs + ' href="' + esc(newUrl(n.link)) + '">' + inner + "</a>" : "<div" + attrs + ">" + inner + "</div>";
           }).join("") +
         "</div>" +
       "</section>";
 
     main.innerHTML = heroHTML() + manifesto + clocksHTML("t-light") + featured + showcase + split + servicesHTML(false, "t-light") + news;
-    doc.title = BRAND;
+    setMeta(SEO.homeTitle || BRAND, SEO.homeDescription || S.brand.description);
   }
 
   /* ------------------------------------------------------------------
@@ -419,23 +540,67 @@
     var TABS = S.projectTabs.length ? S.projectTabs : [{ id: "", label: L.showcaseTitle, title: L.showcaseTitle }];
     function tabById(id) { return TABS.filter(function (t) { return t.id === id; })[0] || TABS[0]; }
     var tab = tabById(tabOf(location.search));
-    var cur = "";
-    try { cur = new URLSearchParams(location.search).get("kategori") || ""; } catch (e) {}
+    // Tür sayfası (/projeler/villa/ -> data-kategori) ya da eski ?kategori=; bölge sayfası (/projeler/sapanca/ -> data-yer)
+    var cur = body.getAttribute("data-kategori") || "";
+    try { cur = new URLSearchParams(location.search).get("kategori") || cur; } catch (e) {}
+    var yer = body.getAttribute("data-yer") || "";
     var view = "liste";
 
-    function inTab(p) { return !tab.durum || p.durum === tab.durum; }
+    function inTab(p) { return (!tab.durum || p.durum === tab.durum) && (!yer || regionOf(p) === yer); }
     function titleOf(t) { return t.title || t.label; }
+
+    // Başlık, sayfa başlığı ve açıklama: sekme, tür ya da bölgeye göre
+    function info(all, items) {
+      var cn = countBy(function (p) { return items.indexOf(p) !== -1 ? p.category : ""; });
+      var cats = Object.keys(cn).sort(function (a, b) { return cn[b] - cn[a]; });
+      if (yer) {
+        // Başlık uzarsa (Google ~60-70 harften sonrasını keser) iki türle yetin
+        var tl = yer + " Projeleri — " + joinTr(cats.slice(0, 3).map(catWord)) + SUFFIX;
+        return {
+          h1: yer + " Projeleri",
+          title: tl.length > 70 ? yer + " Projeleri — " + joinTr(cats.slice(0, 2).map(catWord)) + SUFFIX : tl,
+          desc: ekDa(yer) + " tasarlayıp uyguladığımız " + items.length + " proje: " + namesOf(items, 4) + "."
+        };
+      }
+      if (cur && !tab.durum && catUrl(cur)) {
+        var regs = regionsByCount().filter(function (r) { return items.some(function (p) { return regionOf(p) === r; }); });
+        return {
+          h1: catPlural(cur),
+          title: catPlural(cur) + " — " + regs.slice(0, 2).concat("Sakarya").join(", ") + SUFFIX,
+          desc: "Sakarya ve çevresinde tasarlayıp uyguladığımız " + items.length + " " + catWord(cur).toLocaleLowerCase("tr") +
+            " projesi: " + namesOf(items, 4) + "."
+        };
+      }
+      if (tab.durum) {
+        return {
+          h1: titleOf(tab),
+          title: tab.label + " — Sakarya" + SUFFIX,
+          desc: (tab.durum === "tamamlanan" ? "Projesini çizip inşaatını tamamladığımız " + all.length + " proje: "
+            : "Yapımı süren " + all.length + " projemiz: ") + namesOf(all, 4) + "."
+        };
+      }
+      var n = countBy(function (p) { return p.category; });
+      return {
+        h1: titleOf(tab),
+        title: (SEO.projectsTitle || "Projelerimiz — Villa, Konut ve Ticari Yapılar") + SUFFIX,
+        desc: "Sakarya ve çevresinde tasarlayıp uyguladığımız " + all.length + " proje: " +
+          joinTr(["Villa", "Konut", "Ticari"].filter(function (c) { return n[c]; }).map(function (c) {
+            return n[c] + " " + catWord(c).toLocaleLowerCase("tr");
+          })) + ". " + joinTr(regionsByCount()) + "."
+      };
+    }
 
     main.innerHTML = '' +
       '<section class="t-light" data-theme="light">' +
         '<div class="phead">' +
           '<div class="phead-row rv"><p class="label">' + esc(BRAND) + '</p><p class="label mute" data-count></p></div>' +
           '<h1 class="phead-title mkw"><span class="mk"><span data-tab-title></span></span></h1>' +
+          '<p class="phead-desc rv" data-desc></p>' +
         "</div>" +
         (TABS.length > 1 ?
           '<div class="ptabs rv" role="tablist" aria-label="Proje grupları">' +
             TABS.map(function (t) {
-              return '<a class="ptab" role="tab" href="projeler.html?sekme=' + encodeURIComponent(t.id) + '" data-tab="' + esc(t.id) + '">' +
+              return '<a class="ptab" role="tab" href="' + tabUrl(t) + '" data-tab="' + esc(t.id) + '">' +
                 esc(t.label) + '<sup data-tab-n="' + esc(t.id) + '"></sup></a>';
             }).join("") +
           "</div>" : "") +
@@ -456,15 +621,21 @@
       var cats = [];
       all.forEach(function (p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
       if (cats.indexOf(cur) === -1) cur = "";
+      // Kendi sayfası olan tür düğmesi aynı zamanda o sayfaya bağlantıdır (arama motorları izler; tıklayınca sayfa içinde süzer)
       $("[data-cats]", main).innerHTML = [""].concat(cats).map(function (c) {
         var n = c ? all.filter(function (p) { return p.category === c; }).length : all.length;
-        return '<button class="chip" type="button" data-cat="' + esc(c) + '">' + esc(c || "Tümü") + "<sup>" + n + "</sup></button>";
+        var href = yer ? "" : c ? catUrl(c) : tabUrl(tab);
+        var inner = esc(c || "Tümü") + "<sup>" + n + "</sup>";
+        return href ? '<a class="chip" href="' + href + '" data-cat="' + esc(c) + '">' + inner + "</a>"
+          : '<button class="chip" type="button" data-cat="' + esc(c) + '">' + inner + "</button>";
       }).join("");
-      var t = titleOf(tab), tt = $("[data-tab-title]", main);
-      tt.textContent = t;
-      tt.closest(".phead-title").style.setProperty("--n", Math.max(8, t.length));
+      var items = all.filter(function (p) { return !cur || p.category === cur; });
+      var meta = info(all, items), tt = $("[data-tab-title]", main);
+      tt.textContent = meta.h1;
+      tt.closest(".phead-title").style.setProperty("--n", Math.max(8, meta.h1.length));
+      $("[data-desc]", main).textContent = meta.desc;
       $$("[data-tab]", main).forEach(function (a) {
-        var on = a.getAttribute("data-tab") === tab.id;
+        var on = !yer && a.getAttribute("data-tab") === tab.id;
         a.setAttribute("aria-selected", String(on));
         if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
       });
@@ -473,9 +644,9 @@
         s.textContent = S.projects.filter(function (p) { return !d || p.durum === d; }).length;
       });
       // Üst menüdeki sekme düğmeleri de seçili sekmeyi göstersin
+      CUR_PATH = tabUrl(tab);
       $$(".hdr .pill").forEach(function (a) { var h = a.getAttribute("href"); if (h) a.classList.toggle("is-current", isCurrent(h)); });
 
-      var items = all.filter(function (p) { return !cur || p.category === cur; });
       list.setAttribute("data-view", view);
       list.innerHTML = items.length ? items.map(function (p, i) {
         return '<a class="pitem" href="' + projectUrl(p) + '" style="--i:' + i + '"' + (view === "izgara" ? ' data-cursor="' + esc(L.view) + '"' : "") + ">" +
@@ -485,28 +656,36 @@
           '<span class="pitem-loc">' + esc(p.location) + "</span>" +
           '<span class="pitem-cat">' + esc([p.category, tab.durum ? "" : stateOf(p)].filter(Boolean).join(" · ")) + "</span>" +
           '<span class="pitem-year">' + esc(p.year) + "</span>" +
-          media(p.cover, p.title, 800, "pitem-img") +
+          media(p.cover, p.title + (placeOf(p) ? ", " + placeOf(p) : ""), 800, "pitem-img") +
         "</a>";
       }).join("") : '<p class="pempty">Bu grupta henüz proje yok.</p>';
       count.textContent = items.length + " proje";
       $$("[data-cat]", main).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === cur)); });
       $$("[data-view]", $("[data-views]", main)).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view)); });
       checkImages(list);
-      doc.title = titleOf(tab) + " — " + BRAND;
+      setMeta(meta.title, meta.desc);
     }
 
+    function setUrl(u) { try { if (location.pathname !== u) history.replaceState(null, "", u); } catch (err) {} }
     main.addEventListener("click", function (e) {
+      var plain = !(e.metaKey || e.ctrlKey || e.shiftKey || e.button);
       var tb = e.target.closest("[data-tab]");
-      if (tb && !(e.metaKey || e.ctrlKey || e.shiftKey || e.button)) {
+      if (tb && plain) {
         e.preventDefault();
         tab = tabById(tb.getAttribute("data-tab"));
         cur = "";
-        try { history.replaceState(null, "", "projeler.html?sekme=" + encodeURIComponent(tab.id)); } catch (err) {}
+        yer = "";
+        setUrl(tabUrl(tab));
         draw();
         return;
       }
       var c = e.target.closest("[data-cat]"), v = e.target.closest("[data-views] [data-view]");
-      if (c) { cur = c.getAttribute("data-cat"); draw(); }
+      if (c) {
+        if (c.tagName === "A") { if (!plain) return; e.preventDefault(); }
+        cur = c.getAttribute("data-cat");
+        if (!tab.durum && !yer) setUrl(catUrl(cur) || tabUrl(tab));
+        draw();
+      }
       else if (v) { view = v.getAttribute("data-view"); draw(); }
     });
     draw();
@@ -522,37 +701,45 @@
   /* ------------------------------------------------------------------
      PROJE DETAY SAYFASI
      ------------------------------------------------------------------ */
+  // Olmayan adres (404.html) ya da bilinmeyen proje
+  function renderNotFound(text) {
+    main.innerHTML = '<section class="notfound t-dark" data-theme="dark">' +
+      '<p class="label mute">404</p><h1 class="h-serif">' + esc(text || "Aradığınız sayfa bulunamadı.") + "</h1>" +
+      '<a class="btn" href="/projeler/">' + esc(L.allProjects) + " <i>→</i></a>" +
+      '<a class="btn" href="/">Ana sayfa <i>→</i></a></section>';
+    setMeta("Sayfa bulunamadı" + SUFFIX, "");
+  }
+
   function renderProject() {
-    var id = "";
-    try { id = new URLSearchParams(location.search).get("id") || ""; } catch (e) {}
+    // Proje adresi sayfanın kendisinde (data-id); eski proje.html?id=... adresleri de çalışsın
+    var id = body.getAttribute("data-id") || "";
+    try { id = new URLSearchParams(location.search).get("id") || id; } catch (e) {}
+    id = (S.eskiAdresler || {})[id] || id;
     var idx = -1;
     S.projects.forEach(function (p, i) { if (p.slug === id) idx = i; });
 
-    if (idx === -1) {
-      main.innerHTML = '<section class="notfound t-dark" data-theme="dark">' +
-        '<p class="label mute">404</p><h1 class="h-serif">Aradığınız proje bulunamadı.</h1>' +
-        '<a class="btn" href="projeler.html">' + esc(L.allProjects) + " <i>→</i></a></section>";
-      doc.title = "Proje bulunamadı — " + BRAND;
-      return;
-    }
+    if (idx === -1) { renderNotFound("Aradığınız proje bulunamadı."); return; }
 
     var p = S.projects[idx];
     var next = S.projects[(idx + 1) % S.projects.length];
     var ptab = S.projectTabs.filter(function (t) { return t.durum && t.durum === p.durum; })[0];
     var state = esc(p.status || stateOf(p));
+    var reg = regionUrl(regionOf(p));
     var facts = [
-      ["Yer", esc(p.location)],
+      ["Yer", reg && p.location ? '<a href="' + reg + '">' + esc(p.location) + "</a>" : esc(p.location)],
       ["Yıl", esc(p.year)],
       ["Alan", esc(p.area)],
-      ["Tür", '<a href="projeler.html?kategori=' + encodeURIComponent(p.category) + '">' + esc(p.category) + "</a>"],
-      ["Durum", ptab && state ? '<a href="projeler.html?sekme=' + encodeURIComponent(ptab.id) + '">' + state + "</a>" : state],
+      ["Tür", '<a href="' + (catUrl(p.category) || "/projeler/") + '">' + esc(p.category) + "</a>"],
+      ["Durum", ptab && state ? '<a href="' + tabUrl(ptab) + '">' + state + "</a>" : state],
       ["İşveren", esc(p.client)]
     ].filter(function (f) { return f[1]; });
+    // Görsel açıklaması: "Kırkpınar Villa, Sapanca — villa projesi, görsel 3"
+    var altBase = p.title + (placeOf(p) ? ", " + placeOf(p) : "") + " — " + catWord(p.category).toLocaleLowerCase("tr") + " projesi";
     var text = p.text || [];
 
     main.innerHTML = '' +
       '<section class="pcover t-dark" data-theme="dark">' +
-        media(p.cover, p.title, 2000, "", true) +
+        media(p.cover, altBase, 2000, "", true) +
         '<div class="pcover-in mkw">' +
           '<p class="label rv">' + esc([p.category, p.year].filter(Boolean).join(" · ")) + "</p>" +
           '<h1 class="pcover-title"><span class="mk"><span>' + esc(p.title) + "</span></span></h1>" +
@@ -576,20 +763,20 @@
             var wide = o.wide == null ? (!o.land && !o.video && i % 3 === 0 && typeof g === "string") : !!o.wide;
             var cls = "rv" + (wide ? " is-wide" : "") + (o.land ? " is-land" : "");
             if (o.video) {
-              return '<span class="media is-video ' + cls + '"><video src="' + esc(o.video) + '"' +
-                (o.poster ? ' poster="' + esc(o.poster) + '"' : "") +
+              return '<span class="media is-video ' + cls + '"><video src="' + esc(kok(o.video)) + '"' +
+                (o.poster ? ' poster="' + esc(webp(o.poster, 960)) + '"' : "") +
                 ' controls controlslist="nodownload" disablepictureinpicture muted playsinline preload="none" aria-label="' + esc(p.title) + ' — video"></video></span>';
             }
-            return media(o.src, p.title + " — görsel " + (i + 1), wide ? 2000 : 1200, cls);
+            return media(o.src, altBase + ", görsel " + (i + 1), wide ? 2000 : 1200, cls);
           }).join("") +
         "</div>" +
       "</section>" +
       '<a class="pnext t-dark" data-theme="dark" href="' + projectUrl(next) + '" data-cursor="' + esc(L.next) + '">' +
-        media(next.cover, "", 1600) +
+        media(next.cover, "", 2000) +
         '<span class="label">' + esc(L.nextProject) + "</span>" +
         '<span class="pnext-title">' + esc(next.title) + "</span>" +
       "</a>";
-    doc.title = p.title + " — " + BRAND;
+    setMeta(projectTitle(p), projectDesc(p));
   }
 
   /* ------------------------------------------------------------------
@@ -604,7 +791,7 @@
           '<h1 class="shead-title rv" style="--d:.1s">' + rich(st.headline) + "</h1>" +
         "</div>" +
         '<div class="sabout">' +
-          media(st.image, BRAND, 1400, "rv") +
+          media(st.image, BRAND + " ofisi, Serdivan", 1400, "rv") +
           '<div class="sabout-text rv">' +
             (st.text || []).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") +
             (!(st.stats || []).length ? "" : '<div class="stats">' + st.stats.map(function (s) {
@@ -618,7 +805,7 @@
           '<div class="pgal">' + st.gallery.map(function (g, i) {
             var o = typeof g === "string" ? { src: g } : (g || {});
             var cls = "rv" + (o.wide ? " is-wide" : "") + (o.land ? " is-land" : "");
-            return media(o.src, BRAND + " ofisi — görsel " + (i + 1), o.wide ? 2000 : 1200, cls);
+            return media(o.src, BRAND + " ofisi, Serdivan — görsel " + (i + 1), o.wide ? 2000 : 1200, cls);
           }).join("") + "</div>") +
       "</section>" +
       servicesHTML(true, "t-light") +
@@ -644,7 +831,8 @@
           return '<div class="rv"><h3>' + esc(o.city) + "</h3><p>" + esc(o.address) + (o.phone ? "<br>" + esc(o.phone) : "") + "</p></div>";
         }).join("") + "</div>") +
       "</section>";
-    doc.title = L.studio + " — " + BRAND;
+    var lead = S.team[0] ? " — " + [S.team[0].role, S.team[0].name].filter(Boolean).join(" ") : "";
+    setMeta(L.studio + lead + SUFFIX, clip(SEO.aboutDescription || firstSentence((st.text || [])[0] || S.brand.description)));
   }
 
   /* ------------------------------------------------------------------
@@ -1017,17 +1205,19 @@
   }
 
   function boot() {
+    // Sayfa önceden üretildiyse (araclar/uret.js) menü ve alt bilgi HTML'de hazır gelir; aynısı yeniden çizileceği için kaldırılır
+    $$(".hdr, #menu, .ftr").forEach(function (el) { el.parentNode.removeChild(el); });
+
     if (PAGE === "projects") renderProjects();
     else if (PAGE === "project") renderProject();
     else if (PAGE === "studio") renderStudio();
+    else if (PAGE === "notfound") renderNotFound();
     else renderHome();
 
     pageEl.insertAdjacentHTML("beforebegin", headerHTML());
-    pageEl.insertAdjacentHTML("beforeend", footerHTML(PAGE === "studio"));
+    pageEl.insertAdjacentHTML("beforeend", footerHTML(PAGE === "studio" || PAGE === "notfound"));
     var pl = $(".preloader-mark .logo-a");
     if (pl) pl.innerHTML = MARK + esc(S.brand.name);
-    var md = $('meta[name="description"]');
-    if (md) md.setAttribute("content", S.brand.description || "");
 
     hdr = $(".hdr");
     themed = $$("[data-theme]", pageEl);
@@ -1073,6 +1263,22 @@
       runIntro();
     }
   }
+
+  // araclar/uret.js bu listeyle her sayfayı ayrı HTML olarak üretir
+  window.SITE_ADRESLER = function () {
+    var r = [{ url: "/", page: "home" }, { url: "/hakkimizda/", page: "studio" }];
+    S.projectTabs.forEach(function (t) { r.push({ url: tabUrl(t), page: "projects", sekme: t.id }); });
+    Object.keys(CAT_N).filter(catUrl).forEach(function (c) { r.push({ url: catUrl(c), page: "projects", kategori: c }); });
+    regionsByCount().forEach(function (y) { r.push({ url: regionUrl(y), page: "projects", yer: y }); });
+    S.projects.forEach(function (p) {
+      r.push({ url: projectUrl(p), page: "project", id: p.slug, cover: p.cover, title: p.title, location: p.location,
+        place: placeOf(p), region: regionOf(p), category: p.category, year: p.year, durum: p.durum, text: (p.text || []).join(" "),
+        catUrl: catUrl(p.category), regionUrl: regionUrl(regionOf(p)), tab: tabUrl(S.projectTabs.filter(function (t) { return t.durum && t.durum === p.durum; })[0]),
+        images: [p.cover].concat((p.gallery || []).map(function (g) { return typeof g === "string" ? g : (g && (g.src || g.poster)) || ""; })).filter(Boolean) });
+    });
+    return r;
+  };
+  window.SITE_ESKI = newUrl;
 
   boot();
 })();
