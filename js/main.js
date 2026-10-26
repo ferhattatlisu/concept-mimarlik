@@ -369,6 +369,8 @@
         '<div class="ftr-word" aria-hidden="true"><span>' + esc(S.brand.name) + "</span></div>" +
         '<div class="ftr-base">' +
           "<span>© " + new Date().getFullYear() + " " + esc(BRAND) + "</span>" +
+          // Tasarımcı imzası: bağlantı metni yalnızca marka adı (anahtar kelimeli metin yazılmaz)
+          '<span class="ftr-credit">Tasarım: <a href="https://tektiklahizmet.com/" target="_blank" rel="noopener">TekTıklaHizmet</a></span>' +
           '<button class="ftr-top" type="button">Yukarı ↑</button>' +
         "</div>" +
       "</footer>";
