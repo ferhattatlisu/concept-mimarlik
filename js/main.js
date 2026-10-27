@@ -369,8 +369,6 @@
         '<div class="ftr-word" aria-hidden="true"><span>' + esc(S.brand.name) + "</span></div>" +
         '<div class="ftr-base">' +
           "<span>© " + new Date().getFullYear() + " " + esc(BRAND) + "</span>" +
-          // Tasarımcı imzası: bağlantı metni yalnızca marka adı (anahtar kelimeli metin yazılmaz)
-          '<span class="ftr-credit">Tasarım: <a href="https://tektiklahizmet.com/" target="_blank" rel="noopener">TekTıklaHizmet</a></span>' +
           '<button class="ftr-top" type="button">Yukarı ↑</button>' +
         "</div>" +
       "</footer>";
@@ -733,7 +731,9 @@
       ["Alan", esc(p.area)],
       ["Tür", '<a href="' + (catUrl(p.category) || "/projeler/") + '">' + esc(p.category) + "</a>"],
       ["Durum", ptab && state ? '<a href="' + tabUrl(ptab) + '">' + state + "</a>" : state],
-      ["İşveren", esc(p.client)]
+      ["İşveren", esc(p.client)],
+      // Satış ilanı bağlantısı (data.js -> projede ilan: { label, href })
+      ["İlan", p.ilan && p.ilan.href ? '<a href="' + esc(p.ilan.href) + '" target="_blank" rel="noopener">' + esc(p.ilan.label || "İlana git") + "</a>" : ""]
     ].filter(function (f) { return f[1]; });
     // Görsel açıklaması: "Kırkpınar Villa, Sapanca — villa projesi, görsel 3"
     var altBase = p.title + (placeOf(p) ? ", " + placeOf(p) : "") + " — " + catWord(p.category).toLocaleLowerCase("tr") + " projesi";

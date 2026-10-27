@@ -525,6 +525,8 @@
         status: "Yapım aşamasında · Satışta",
         durum: "devam",
         client: "Concept Mimarlık İnşaat",
+        // Satış ilanı (künyede "İlan" satırı olarak görünür)
+        ilan: { label: "sahibinden.com — 2+1 daire", href: "https://www.sahibinden.com/ilan/emlak-konut-satilik-concept-12-neviye-ultra-lux-2-plus1-daire-1346277529/detay" },
         featured: false,
         showcase: false,
         cover: g("neviye-y-01"),
@@ -3828,7 +3830,10 @@
       social: [
         { label: "Instagram", href: "https://www.instagram.com/conceptmimarlik_/" },
         { label: "Facebook",  href: "https://www.facebook.com/stsefatopcu/" },
-        { label: "WhatsApp",  href: "https://wa.me/905340209056" }
+        { label: "WhatsApp",  href: "https://wa.me/905340209056" },
+        // Sefa Bey'in isteği (27 Eki 2026). Sahibinden'de mağaza yok, bireysel hesap (Muhammet Sefa Topçu, Ekim 2015);
+        // bireysel hesabın herkese açık profil sayfası olmadığı için o günkü tek ilanına bağlandı. İlan değişince güncelleyin.
+        { label: "Sahibinden", href: "https://www.sahibinden.com/ilan/emlak-konut-satilik-concept-12-neviye-ultra-lux-2-plus1-daire-1346277529/detay" }
       ]
     }
   };

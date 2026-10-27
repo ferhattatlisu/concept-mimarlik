@@ -818,8 +818,6 @@ html.has-cursor [data-cursor], html.has-cursor [data-cursor] * { cursor: none; }
   font-size: .8rem;
 }
 .ftr-top { text-transform: uppercase; letter-spacing: .08em; font-size: .74rem; color: #fff; }
-.ftr-credit a { color: #c4c4c4; transition: color .3s ease; }
-@media (hover: hover) { .ftr-credit a:hover { color: #fff; } }
 
 /* =====================================================================
    PROJELER SAYFASI
