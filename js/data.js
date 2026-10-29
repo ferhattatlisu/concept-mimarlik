@@ -530,20 +530,47 @@
           "Beyaz ve antrasit kütleler, ahşap görünümlü kaplamalar ve geniş doğramalar yapıyı bahçeye ve havuza açıyor; tasarım üç boyutlu görsellerle farklı açılardan çalışıldı.",
           "Şantiyede kaba inşaat tamamlandı; cephe kaplaması ve ince işler devam ediyor."
         ],
-        gallery: [
-          genis("st-villa-01"),
-          yatay("st-villa-02"),
-          yatay("st-villa-03"),
-          genis("st-villa-04"),
-          yatay("st-villa-05"),
-          yatay("st-villa-06"),
-          genis("st-villa-07"),
-          dikey("st-villa-08"),
-          dikey("st-villa-09"),
-          dikey("st-villa-10"),
-          dikey("st-villa-11"),
-          dikey("st-villa-12"),
-          dikey("st-villa-13")
+        /* Aşama aşama galeri (28 Eki). Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0434–0508 */
+        asamalar: [
+          { ad: "3B Proje", gorseller: [
+            genis("st-villa-01"),
+            yatay("st-villa-02"),
+            yatay("st-villa-03"),
+            genis("st-villa-04"),
+            yatay("st-villa-05"),
+            yatay("st-villa-06"),
+            genis("st-villa-07")
+          ] },
+          { ad: "Temel", gorseller: [
+            dikey("st-villa-15"),
+            dikey("st-villa-16"),
+            dikey("st-villa-17"),
+            dikey("st-villa-18")
+          ] },
+          { ad: "Karkas ve Duvar", gorseller: [
+            dikey("st-villa-19"),
+            dikey("st-villa-20"),
+            dikey("st-villa-21"),
+            dikey("st-villa-22"),
+            dikey("st-villa-23"),
+            dikey("st-villa-24")
+          ] },
+          { ad: "Cephe", gorseller: [
+            dikey("st-villa-25"),
+            dikey("st-villa-26"),
+            dikey("st-villa-27"),
+            dikey("st-villa-28"),
+            dikey("st-villa-08"),
+            dikey("st-villa-09"),
+            dikey("st-villa-10"),
+            dikey("st-villa-29")
+          ] },
+          { ad: "Son Durum", gorseller: [
+            dikey("st-villa-11"),
+            dikey("st-villa-12"),
+            dikey("st-villa-13"),
+            dikey("st-villa-14")
+          ] }
         ]
       },
       {
@@ -634,18 +661,33 @@
           "Sütunlu giriş, kemerli pencereler, kat silmeleri ve geniş saçaklarla zengin bir cephe kurgulandı; üç boyutlu görsellerde bahçe ve havuz düzeni de çalışıldı.",
           "Şantiyede kaba inşaat ve dış sıva aşamaları ilerliyor."
         ],
-        gallery: [
-          genis("sahin-villa-01"),
-          yatay("sahin-villa-02"),
-          yatay("sahin-villa-03"),
-          genis("sahin-villa-04"),
-          yatay("sahin-villa-05"),
-          yatay("sahin-villa-06"),
-          genis("sahin-villa-07"),
-          yatay("sahin-villa-08"),
-          yatay("sahin-villa-09"),
-          dikey("sahin-villa-10"),
-          dikey("sahin-villa-11")
+        /* Aşama aşama galeri (28 Eki). Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0575–0601 */
+        asamalar: [
+          { ad: "3B Proje", gorseller: [
+            genis("sahin-villa-01"),
+            yatay("sahin-villa-02"),
+            yatay("sahin-villa-03"),
+            yatay("sahin-villa-04"),
+            yatay("sahin-villa-05"),
+            yatay("sahin-villa-06"),
+            yatay("sahin-villa-07")
+          ] },
+          { ad: "Temel ve Karkas", gorseller: [
+            dikey("sahin-villa-13"),
+            dikey("sahin-villa-14"),
+            dikey("sahin-villa-11"),
+            dikey("sahin-villa-15")
+          ] },
+          { ad: "Duvar", gorseller: [
+            dikey("sahin-villa-12"),
+            dikey("sahin-villa-16")
+          ] },
+          { ad: "Cephe", gorseller: [
+            yatay("sahin-villa-08"),
+            yatay("sahin-villa-09"),
+            dikey("sahin-villa-10"),
+            dikey("sahin-villa-17")
+          ] }
         ]
       },
       {
@@ -768,23 +810,38 @@
           "Cephede doğal taş kaplama, beyaz söveler, kemerli balkonlar ve yuvarlak pencereler kullanıldı; zemin kat yola açılan dükkânlara ayrıldı.",
           "Galeride üç boyutlu tasarım görselleri, iç mekân çalışmaları ve temelden cepheye yapım aşamaları birlikte yer alıyor."
         ],
-        gallery: [
-          genis("mt-tanta-01"),
-          yatay("mt-tanta-02"),
-          yatay("mt-tanta-03"),
-          genis("mt-tanta-04"),
-          yatay("mt-tanta-05"),
-          yatay("mt-tanta-06"),
-          genis("mt-tanta-07"),
-          yatay("mt-tanta-08"),
-          yatay("mt-tanta-09"),
-          genis("mt-tanta-10"),
-          yatay("mt-tanta-11"),
-          yatay("mt-tanta-12"),
-          genis("mt-tanta-13"),
-          yatay("mt-tanta-14"),
-          yatay("mt-tanta-15"),
-          genis("ct-01")
+        /* Aşama aşama galeri (28 Eki). Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0355–0385 */
+        asamalar: [
+          { ad: "3B Proje ve İç Mekân", gorseller: [
+            genis("mt-tanta-11"),
+            yatay("mt-tanta-12"),
+            yatay("mt-tanta-13"),
+            yatay("mt-tanta-16"),
+            yatay("mt-tanta-17"),
+            yatay("mt-tanta-14"),
+            yatay("mt-tanta-15")
+          ] },
+          { ad: "Temel ve Karkas", gorseller: [
+            genis("mt-tanta-18"),
+            yatay("mt-tanta-19"),
+            yatay("mt-tanta-20")
+          ] },
+          { ad: "Duvar ve Cephe", gorseller: [
+            yatay("mt-tanta-09"),
+            yatay("mt-tanta-10"),
+            yatay("mt-tanta-07"),
+            yatay("mt-tanta-05")
+          ] },
+          { ad: "Bitmiş Hâli", gorseller: [
+            genis("mt-tanta-01"),
+            yatay("mt-tanta-02"),
+            yatay("mt-tanta-03"),
+            yatay("mt-tanta-04"),
+            yatay("mt-tanta-06"),
+            yatay("mt-tanta-08"),
+            yatay("mt-tanta-21"),
+            genis("ct-01")
+          ] }
         ]
       },
       {
@@ -806,19 +863,38 @@
           "Cephede doğal taş kaplama, ahşap görünümlü paneller ve koyu saçak bir arada kullanıldı; köşedeki silindirik kule yapının imzası oldu. Cephe altyapısında şase, bordex ve betopan uygulandı.",
           "Galeride üç boyutlu tasarım görselleri ile şantiyeden ve bitmiş yapıdan fotoğraflar birlikte yer alıyor."
         ],
-        gallery: [
-          genis("kokumer-y-01"),
-          dikey("kokumer-y-02"),
-          dikey("kokumer-y-03"),
-          yatay("kokumer-y-05"),
-          yatay("kokumer-y-06"),
-          genis("kokumer-y-07"),
-          dikey("kokumer-y-04"),
-          dikey("kokumer-y-08"),
-          yatay("kokumer-y-10"),
-          yatay("kokumer-y-11"),
-          dikey("kokumer-y-09"),
-          dikey("kokumer-03")
+        /* Aşama aşama galeri (28 Eki). Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0253–0292 */
+        asamalar: [
+          { ad: "3B Proje", gorseller: [
+            genis("kokumer-y-01"),
+            yatay("kokumer-y-05"),
+            yatay("kokumer-y-06"),
+            yatay("kokumer-y-07"),
+            yatay("kokumer-y-12")
+          ] },
+          { ad: "Kaba İnşaat ve İskele", gorseller: [
+            yatay("kokumer-y-13"),
+            yatay("kokumer-y-14"),
+            yatay("kokumer-y-15"),
+            yatay("kokumer-y-16"),
+            dikey("kokumer-03"),
+            dikey("kokumer-y-17")
+          ] },
+          { ad: "Taş ve Ahşap Kaplama", gorseller: [
+            genis("kokumer-y-10"),
+            dikey("kokumer-y-08"),
+            dikey("kokumer-y-09"),
+            dikey("kokumer-y-18"),
+            dikey("kokumer-y-19"),
+            yatay("kokumer-y-11"),
+            yatay("kokumer-y-20")
+          ] },
+          { ad: "Bitmiş Hâli", gorseller: [
+            dikey("kokumer-y-02"),
+            dikey("kokumer-y-03"),
+            dikey("kokumer-y-04"),
+            dikey("kokumer-01")
+          ] }
         ]
       },
       {
@@ -841,20 +917,32 @@
           "Galeride üç boyutlu tasarım görselleri, ahşap çatı ve cephe aşamaları ile bitmiş yapıdan bir fotoğraf yer alıyor.",
           "Firmanın bu proje adıyla paylaştığı, modern çizgide hazırlanmış bir tasarım çalışması da galeride yer alıyor."
         ],
-        gallery: [
-          genis("ns-villa-01"),
-          yatay("ns-villa-03"),
-          yatay("ns-villa-04"),
-          genis("ns-villa-05"),
-          yatay("ns-villa-06"),
-          yatay("ns-villa-07"),
-          genis("ns-villa-08"),
-          yatay("ns-villa-09"),
-          yatay("ns-villa-10"),
-          genis("ns-villa-b-01"),
-          yatay("ns-villa-b-02"),
-          yatay("ns-villa-b-03"),
-          genis("ns-villa-b-04")
+        /* Aşama aşama galeri (28 Eki). Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0418–0433; modern tasarım 22 Eki 0476–0481 */
+        asamalar: [
+          { ad: "3B Proje", gorseller: [
+            genis("ns-villa-01"),
+            yatay("ns-villa-03"),
+            yatay("ns-villa-04"),
+            yatay("ns-villa-05"),
+            yatay("ns-villa-06"),
+            yatay("ns-villa-07"),
+            yatay("ns-villa-08"),
+            genis("ns-villa-11")
+          ] },
+          { ad: "Ahşap Çatı ve Yalıtım", gorseller: [
+            genis("ns-villa-12"),
+            yatay("ns-villa-09"),
+            yatay("ns-villa-10")
+          ] },
+          { ad: "Bitmiş Hâli", gorseller: [
+            genis("ns-villa-02")
+          ] },
+          { ad: "Modern Tasarım Çalışması", gorseller: [
+            genis("ns-villa-b-01"),
+            yatay("ns-villa-b-02"),
+            yatay("ns-villa-b-03"),
+            genis("ns-villa-b-04")
+          ] }
         ]
       },
       {
@@ -1010,17 +1098,32 @@
           "Antrasit ve beyaz yüzeyler, köşelerde doğal taş kaplama ve geniş balkonlarla iki katlı bir villa kuruldu; uygulama tasarımla aynı çizgide ilerledi.",
           "Galeride temel demirinden kaba inşaata, taş kaplamadan bitmiş cepheye kadar yapım aşamaları yer alıyor."
         ],
-        gallery: [
-          genis("ma-villa-y-01"),
-          yatay("ma-villa-y-02"),
-          yatay("ma-villa-y-03"),
-          genis("ma-villa-y-04"),
-          yatay("ma-villa-y-05"),
-          yatay("ma-villa-y-06"),
-          genis("ma-villa-y-08"),
-          yatay("ma-villa-y-09"),
-          yatay("ma-villa-01"),
-          genis("ma-villa-03")
+        /* Aşama aşama galeri (28 Eki). Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0323–0342 */
+        asamalar: [
+          { ad: "3B Proje", gorseller: [
+            genis("ma-villa-01")
+          ] },
+          { ad: "Temel ve Karkas", gorseller: [
+            yatay("ma-villa-y-09"),
+            yatay("ma-villa-y-10"),
+            genis("ma-villa-y-08")
+          ] },
+          { ad: "Cephe ve Taş Kaplama", gorseller: [
+            yatay("ma-villa-y-02"),
+            yatay("ma-villa-y-03"),
+            yatay("ma-villa-y-11"),
+            yatay("ma-villa-y-12"),
+            yatay("ma-villa-y-05"),
+            yatay("ma-villa-y-13"),
+            dikey("ma-villa-y-07"),
+            dikey("ma-villa-y-14")
+          ] },
+          { ad: "Bitmiş Cephe", gorseller: [
+            genis("ma-villa-y-01"),
+            yatay("ma-villa-y-04"),
+            yatay("ma-villa-y-06"),
+            genis("ma-villa-02")
+          ] }
         ]
       },
       {
