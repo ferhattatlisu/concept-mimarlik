@@ -185,24 +185,56 @@
         text: [
           "Sapanca Kırkpınar'daki bu villanın hem mimari projesini çizdik hem de inşaatını yaptık. Mimar: Muhammet Sefa Topçu.",
           "Antrasit ve beyaz yüzeyler, ahşap görünümlü dikey panellerle yumuşatıldı. Geniş doğramalar salonu doğrudan bahçeye ve havuza açıyor.",
-          "Havuz, mermer görünümlü kenar taşları ve taşma kanalıyla aynı ekip tarafından uygulandı. Galeride temel ve havuz betonarmesinden yerden ısıtmaya, cepheden bitmiş bahçeye kadar yapım aşamaları da yer alıyor."
+          "Havuz, mermer görünümlü kenar taşları ve taşma kanalıyla aynı ekip tarafından uygulandı. Aşağıda villayı 3B projeden hafriyata, kaba inşaattan cepheye ve havuza, bitmiş hâline kadar aşama aşama görebilirsiniz."
         ],
-        gallery: [
-          genis("kirkpinar-01"),
-          dikey("kirkpinar-03"),
-          dikey("kirkpinar-04"),
-          dikey("kirkpinar-05"),
-          dikey("kirkpinar-06"),
-          dikey("kirkpinar-07"),
-          dikey("kirkpinar-08"),
-          dikey("kirkpinar-09"),
-          dikey("kirkpinar-10"),
-          dikey("kirkpinar-11"),
-          dikey("kirkpinar-12"),
-          dikey("kirkpinar-13"),
-          dikey("kirkpinar-14"),
-          yatay("kirkpinar-02"),
-          yatay("kirkpinar-16")
+        /* Aşama aşama galeri (28 Eki: aşama aşama gönderilen projelerde fotoğraflar aşamalara ayrılacak).
+           Kaynak: whatsapp/2026-10-19-sefa/wa-19ekim/0184–0252 */
+        asamalar: [
+          { ad: "3B Proje", gorseller: [
+            genis("kirkpinar-16"),
+            yatay("kirkpinar-17"),
+            yatay("kirkpinar-18"),
+            yatay("kirkpinar-19"),
+            yatay("kirkpinar-20")
+          ] },
+          { ad: "Hafriyat ve Kaba İnşaat", gorseller: [
+            dikey("kirkpinar-21"),
+            dikey("kirkpinar-14"),
+            dikey("kirkpinar-22"),
+            dikey("kirkpinar-23")
+          ] },
+          { ad: "Cephe ve İç İşler", gorseller: [
+            dikey("kirkpinar-13"),
+            dikey("kirkpinar-24"),
+            dikey("kirkpinar-25"),
+            dikey("kirkpinar-26"),
+            dikey("kirkpinar-27"),
+            dikey("kirkpinar-15"),
+            dikey("kirkpinar-28"),
+            dikey("kirkpinar-29")
+          ] },
+          { ad: "Havuz", gorseller: [
+            dikey("kirkpinar-30"),
+            dikey("kirkpinar-31"),
+            dikey("kirkpinar-32"),
+            dikey("kirkpinar-33"),
+            dikey("kirkpinar-09"),
+            dikey("kirkpinar-10"),
+            dikey("kirkpinar-11"),
+            dikey("kirkpinar-12")
+          ] },
+          { ad: "Bitmiş Hâli", gorseller: [
+            genis("kirkpinar-01"),
+            dikey("kirkpinar-03"),
+            dikey("kirkpinar-04"),
+            dikey("kirkpinar-05"),
+            dikey("kirkpinar-06"),
+            dikey("kirkpinar-07"),
+            dikey("kirkpinar-08"),
+            dikey("kirkpinar-34"),
+            dikey("kirkpinar-35"),
+            genis("kirkpinar-02")
+          ] }
         ]
       },
       {

@@ -990,6 +990,7 @@ html.has-cursor [data-cursor], html.has-cursor [data-cursor] * { cursor: none; }
 .pgal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 22px); padding: 0 var(--pad) clamp(80px, 11vw, 180px); }
 .pgal .media { aspect-ratio: 4 / 5; }
 .pgal .media.is-wide { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+.pgal.is-stage { padding-bottom: clamp(56px, 7vw, 110px); }
 
 .pnext {
   position: relative;

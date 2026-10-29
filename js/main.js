@@ -740,6 +740,32 @@
     // Görsel açıklaması: "Kırkpınar Villa, Sapanca — villa projesi, görsel 3"
     var altBase = p.title + (placeOf(p) ? ", " + placeOf(p) : "") + " — " + catWord(p.category).toLocaleLowerCase("tr") + " projesi";
     var text = p.text || [];
+    var sira = 0;
+    function galeri(list, cls) {
+      return '<div class="pgal' + (cls || "") + '">' +
+        (list || []).map(function (g, i) {
+          // Varsayılan: 1 geniş + 2 yan yana. Nesne verilirse düzen elle seçilir:
+          //   { src, wide: true }  tam genişlik   { src, land: true }  yarım genişlik, yatay
+          //   { src, wide: false } yarım genişlik, dikey   { video, poster } video
+          var o = typeof g === "string" ? { src: g } : (g || {});
+          var n = ++sira;
+          var wide = o.wide == null ? (!o.land && !o.video && i % 3 === 0 && typeof g === "string") : !!o.wide;
+          var cls = "rv" + (wide ? " is-wide" : "") + (o.land ? " is-land" : "");
+          if (o.video) {
+            return '<span class="media is-video ' + cls + '"><video src="' + esc(kok(o.video)) + '"' +
+              (o.poster ? ' poster="' + esc(webp(o.poster, 960)) + '"' : "") +
+              ' controls controlslist="nodownload" disablepictureinpicture muted playsinline preload="none" aria-label="' + esc(p.title) + ' — video"></video></span>';
+          }
+          return media(o.src, altBase + ", görsel " + n, wide ? 2000 : 1200, cls);
+        }).join("") +
+      "</div>";
+    }
+    // Aşama aşama gönderilen projelerde (data.js -> asamalar) galeri aşamalara bölünür
+    var asamalar = p.asamalar || [];
+    var galeriHtml = !asamalar.length ? galeri(p.gallery) : asamalar.map(function (a, i) {
+      return '<div class="sec-head rv"><h2 class="label">' + pad2(i + 1) + " — " + esc(a.ad) + '</h2><span class="label mute">' + pad2(a.gorseller.length) + "</span></div>" +
+        galeri(a.gorseller, i < asamalar.length - 1 ? " is-stage" : "");
+    }).join("");
 
     main.innerHTML = '' +
       '<section class="pcover t-dark" data-theme="dark">' +
@@ -758,22 +784,7 @@
             '<div class="ptext-body rv">' + text.slice(1).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") + "</div>" +
           "</div>" +
         "</div>" +
-        '<div class="pgal">' +
-          (p.gallery || []).map(function (g, i) {
-            // Varsayılan: 1 geniş + 2 yan yana. Nesne verilirse düzen elle seçilir:
-            //   { src, wide: true }  tam genişlik   { src, land: true }  yarım genişlik, yatay
-            //   { src, wide: false } yarım genişlik, dikey   { video, poster } video
-            var o = typeof g === "string" ? { src: g } : (g || {});
-            var wide = o.wide == null ? (!o.land && !o.video && i % 3 === 0 && typeof g === "string") : !!o.wide;
-            var cls = "rv" + (wide ? " is-wide" : "") + (o.land ? " is-land" : "");
-            if (o.video) {
-              return '<span class="media is-video ' + cls + '"><video src="' + esc(kok(o.video)) + '"' +
-                (o.poster ? ' poster="' + esc(webp(o.poster, 960)) + '"' : "") +
-                ' controls controlslist="nodownload" disablepictureinpicture muted playsinline preload="none" aria-label="' + esc(p.title) + ' — video"></video></span>';
-            }
-            return media(o.src, altBase + ", görsel " + (i + 1), wide ? 2000 : 1200, cls);
-          }).join("") +
-        "</div>" +
+        galeriHtml +
       "</section>" +
       '<a class="pnext t-dark" data-theme="dark" href="' + projectUrl(next) + '" data-cursor="' + esc(L.next) + '">' +
         media(next.cover, "", 2000) +
@@ -1278,7 +1289,7 @@
       r.push({ url: projectUrl(p), page: "project", id: p.slug, cover: p.cover, title: p.title, location: p.location,
         place: placeOf(p), region: regionOf(p), category: p.category, year: p.year, durum: p.durum, text: (p.text || []).join(" "),
         catUrl: catUrl(p.category), regionUrl: regionUrl(regionOf(p)), tab: tabUrl(S.projectTabs.filter(function (t) { return t.durum && t.durum === p.durum; })[0]),
-        images: [p.cover].concat((p.gallery || []).map(function (g) { return typeof g === "string" ? g : (g && (g.src || g.poster)) || ""; })).filter(Boolean) });
+        images: [p.cover].concat((p.asamalar ? [].concat.apply([], p.asamalar.map(function (a) { return a.gorseller; })) : p.gallery || []).map(function (g) { return typeof g === "string" ? g : (g && (g.src || g.poster)) || ""; })).filter(Boolean) });
     });
     return r;
   };
